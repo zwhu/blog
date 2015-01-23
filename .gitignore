@@ -29,3 +29,8 @@ node_modules
 
 # webstorm
 bin
+
+# Express public
+public
+
+

@@ -1,0 +1,22 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "authors": [
+    "zwhu <zwhu2014@foxmail.com>"
+  ],
+  "description": "blog",
+  "keywords": [
+    "blog"
+  ],
+  "license": "MIT",
+  "homepage": "jackhu.me",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ]
+}
