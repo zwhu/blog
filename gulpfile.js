@@ -6,17 +6,34 @@ var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var browserify = require('browserify');
+var reactify = require('reactify');
+var source = require('vinyl-source-stream');
+var del = require('del');
 
-// 检查脚本
-gulp.task('lint', function() {
-    gulp.src('./js/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+// TODO: live load
+
+// clean
+gulp.task('clean', function(cb) {
+    del(['./public/build/', './public/javascripts/*.js'], cb)
+});
+
+
+// react
+gulp.task('browserify', function() {
+    return browserify({
+        entries: './www/views/app.jsx',
+        transform: [reactify]
+    }).bundle()
+        //Pass desired output filename to vinyl-source-stream
+        .pipe(source('bundle.js'))
+        // Start piping stream to tasks!
+        .pipe(gulp.dest('./public/build/'));
 });
 
 // 合并，压缩文件
-gulp.task('scripts', function() {
-    gulp.src('./js/*.js')
+gulp.task('scripts', ['browserify'],  function() {
+    gulp.src('./public/build/*.js')
         .pipe(concat('all.js'))
         .pipe(gulp.dest('./public/javascripts'))
         .pipe(rename('all.min.js'))
@@ -26,10 +43,9 @@ gulp.task('scripts', function() {
 
 // 默认任务
 gulp.task('default', function() {
-    gulp.run('lint', 'scripts');
-
+    gulp.run('browserify', 'scripts');
     // 监听文件变化
-    gulp.watch('./js/*.js', function() {
-        gulp.run('lint', 'scripts');
+    gulp.watch('./www/views/*.jsx', function() {
+        gulp.run('browserify', 'scripts');
     });
 });

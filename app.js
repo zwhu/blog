@@ -10,7 +10,7 @@ var routes = require('./server/routes/index');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, './www/views'));
+app.set('views', [path.join(__dirname, './www'), path.join(__dirname, './www/views') ]);
 app.set('view engine', 'jsx');
 
 var options = {
