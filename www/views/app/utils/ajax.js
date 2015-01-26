@@ -33,9 +33,9 @@ function myGet(url) {
 }
 
 function myPost(url, data, callback) {
-    var data = JSON.stringify(data);
     var xmlDoc = getXmlDoc();
 
+    data = JSON.stringify(data);
     xmlDoc.open('POST', url, true);
     xmlDoc.setRequestHeader("Content-type", "application/json");
 
