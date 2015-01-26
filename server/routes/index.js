@@ -21,11 +21,6 @@ router.get('/', function(req, res, next) {
   res.render('index', config[app.get('env') || 'development']);
 });
 
-/* GET login page. */
-router.get('/login', function(req, res, next) {
-    res.render('login', config[app.get('env') || 'development']);
-});
-
 router.post('/login', function(req, res, next) {
     if(req.body.name === 'test' && req.body.password === '123456') {
         res.cookie('name', 'zwhu', {httpOnly: true, secret: true});

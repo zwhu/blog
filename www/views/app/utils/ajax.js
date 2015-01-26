@@ -26,7 +26,7 @@ function myGet(url) {
 
     xmlDoc.onreadystatechange = function() {
         if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
-            callback(status, xmlDoc.responseText);
+            callback(xmlDoc.status, xmlDoc.responseText);
         }
     };
     xmlDoc.send();
@@ -41,7 +41,7 @@ function myPost(url, data, callback) {
 
     xmlDoc.onreadystatechange = function() {
         if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
-            callback(status);
+            callback(xmlDoc.status);
         }
     };
 
