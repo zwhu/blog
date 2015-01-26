@@ -22,14 +22,15 @@ var run = Router.run;
 var Index = require('./app/components/Index.jsx');
 //var NotFound = require('./app/components/routes/NotFound.jsx');gul
 var About = require('./app/components/About/About.jsx');
+var Login = require('./app/components/Login/Login.jsx');
 //var RoomView = require('./app/components/room/RoomView.jsx');
 //var DefaultWelcome = require('./app/components/DefaultWelcome.jsx');
 
 
 var routes = (
     <Route name="app" path="/" handler={Index}>
-        <Route name="About" path="/about" handler={About}>
-        </Route>
+        <Route name="About" path="/about" handler={About}></Route>
+        <Route name="Login" path="/login" handler={Login}></Route>
     </Route>
 );
 

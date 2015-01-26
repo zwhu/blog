@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+.login div {
+    margin: 10px;
+}
