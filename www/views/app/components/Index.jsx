@@ -2,16 +2,21 @@
 
 var React = require('react');
 var Router = require('react-router');
-var Link = Router.Link;
+var Nav = require('./Nav/Nav.jsx');
+
 var RouteHandler = Router.RouteHandler;
 
 var Index = React.createClass({
+    getInitialState: function() {
+        return {}
+    },
+    componentDidMount: function() {
+
+    },
     render: function () {
         return (
             <div>
-                <Link to="login">View Rooms</Link>
-                <br />
-                <br />
+                <Nav />
                 <RouteHandler />
             </div>
         );

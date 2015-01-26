@@ -21,4 +21,21 @@ router.get('/', function(req, res, next) {
   res.render('index', config[app.get('env') || 'development']);
 });
 
+/* GET login page. */
+router.get('/login', function(req, res, next) {
+    console.log(req.cookies);
+    res.render('login', config[app.get('env') || 'development']);
+});
+
+router.post('/login', function(req, res, next) {
+    console.log(req.cookies);
+    if(req.body.name === '123' && req.body.password === '123456') {
+        res.cookie('name', 'zwhu', {httpOnly: true, secret: true});
+        return res.status(200).redirect('/');
+    } else {
+        return res.status(404).redirect('/login');
+    }
+});
+
+
 module.exports = router;
