@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var browserify = require('browserify');
 var reactify = require('reactify');
@@ -25,6 +26,7 @@ gulp.task('browserify', function() {
         entries: './www/views/app.jsx',
         transform: [reactify]
     }).bundle()
+        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
         //Pass desired output filename to vinyl-source-stream
         .pipe(source('bundle.js'))
         // Start piping stream to tasks!

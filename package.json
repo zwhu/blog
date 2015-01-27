@@ -16,6 +16,7 @@
     "express": "~4.11.0",
     "express-session": "^1.10.1",
     "flux": "^2.0.1",
+    "gulp-util": "^3.0.2",
     "keymirror": "^0.1.1",
     "morgan": "~1.5.1",
     "object-assign": "^2.0.0",
