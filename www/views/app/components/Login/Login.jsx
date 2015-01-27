@@ -9,17 +9,28 @@ var AuthStore = require('../../stores/AuthStores');
 var Link = Router.Link;
 
 var Login = React.createClass({
+    mixins: [ Router.Navigation ],
     getInitialState: function() {
         return ({
             name: '',
             password: ''
         });
     },
-    componentDidMount: function() {
+    componentWillMount:function() {
         //TODO: check it
+        var that = this;
         AuthStore.addChangeListener(function() {
-            console.log('isLogin:' + AuthStore.isLogin);
+            if(this.isLogin()) {
+                that.replaceWith('/');
+            }
         })
+    },
+    componentDidMount: function() {
+    },
+    componentWillUnmount: function() {
+        AuthStore.removeChangeListener(function() {
+            console.log('remove');
+        });
     },
     _handleNameChange: function(e) {
         e.preventDefault();

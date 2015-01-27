@@ -18,6 +18,7 @@
     "flux": "^2.0.1",
     "gulp-util": "^3.0.2",
     "keymirror": "^0.1.1",
+    "mongodb": "^1.4.29",
     "morgan": "~1.5.1",
     "object-assign": "^2.0.0",
     "react-router": "^0.11.6",

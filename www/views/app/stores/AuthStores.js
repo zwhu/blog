@@ -21,12 +21,13 @@ function signin(data) {
 
 function isLogin() {
     _isLogin = !_isLogin;
-    console.log(_isLogin)
     AuthStore.emitChange();
 }
 
 var AuthStore = assign({}, EventEmitter.prototype, {
-    isLogin: _isLogin,
+    isLogin: function() {
+        return _isLogin;
+    },
     emitChange: function() {
         this.emit(CHANGE_EVENT);
     },
