@@ -18,17 +18,21 @@ var Route = Router.Route;
 var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 var run = Router.run;
+var DefaultRoute = Router.DefaultRoute;
 
 var Index = require('./app/components/Index.jsx');
 //var NotFound = require('./app/components/routes/NotFound.jsx');gul
 var About = require('./app/components/About/About.jsx');
 var Login = require('./app/components/Login/Login.jsx');
+var Home = require('./app/components/Home/Home.jsx');
+
 //var RoomView = require('./app/components/room/RoomView.jsx');
 //var DefaultWelcome = require('./app/components/DefaultWelcome.jsx');
 
 
 var routes = (
     <Route name="app" path="/" handler={Index}>
+        <DefaultRoute name="Home" handler={Home} />
         <Route name="About" path="/about" handler={About}></Route>
         <Route name="Login" path="/login" handler={Login}></Route>
     </Route>

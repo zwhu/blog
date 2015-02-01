@@ -9,24 +9,38 @@ var assign = require('object-assign');
 var ajax = require('../utils/ajax');
 
 var CHANGE_EVENT = 'change';
-var _isLogin = false;
 
 function signin(data) {
     ajax.post('/login', data, function(status) {
         if(status === 200)
             AuthAction.signinSuccess(data);
     });
-
 }
 
-function isLogin() {
-    _isLogin = !_isLogin;
-    AuthStore.emitChange();
-}
+ function _getToken() {
+     var token;
+     var ms = document.cookie.match(/token=(.+);/);
+     if(ms) {
+         token = ms[1];
+     }
+     return token;
+ }
 
 var AuthStore = assign({}, EventEmitter.prototype, {
-    isLogin: function() {
-        return _isLogin;
+    getToken: function(cb) {
+        var token = _getToken();
+        if(token) {
+            return cb(token);
+        } else {
+            var intervalId = setInterval(function() {
+                var token = _getToken();
+                if(token) {
+                    clearInterval(intervalId);
+                    return cb(token)
+                }
+            }, 1000);
+        }
+
     },
     emitChange: function() {
         this.emit(CHANGE_EVENT);
@@ -51,7 +65,7 @@ AppDispatcher.register(function(payload) {
             signin(action.data);
             break;
         case AppConstants.AUTH_SIGNIN_SUCCESS:
-            isLogin();
+            AuthStore.emitChange();
             break;
         default:
             return true;

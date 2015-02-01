@@ -17,19 +17,12 @@ var Login = React.createClass({
         });
     },
     componentWillMount:function() {
-        //TODO: check it
-        var that = this;
-        AuthStore.addChangeListener(function() {
-            if(this.isLogin()) {
-                that.replaceWith('/');
-            }
-        })
-    },
-    componentDidMount: function() {
+        this._signinSuccess();
+        AuthStore.addChangeListener(this._signinSuccess.bind(this));
     },
     componentWillUnmount: function() {
         AuthStore.removeChangeListener(function() {
-            console.log('remove');
+
         });
     },
     _handleNameChange: function(e) {
@@ -49,6 +42,14 @@ var Login = React.createClass({
     _handleClick: function(e) {
         e.preventDefault();
         AuthAction.signin(this.state);
+    },
+    _signinSuccess: function() {
+        var that = this;
+        AuthStore.getToken(function(token) {
+            if(token) {
+                that.replaceWith('/');
+            }
+        });
     },
     render: function () {
         return (

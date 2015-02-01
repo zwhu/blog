@@ -1,8 +1,9 @@
 /**
  * Created by huzhengwei on 15/1/27.
  */
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost:27017/blog';
+var dbConfig =  require('./db');
+var MongoClient = dbConfig.MongoClient;
+var url = dbConfig.url;
 
 function User() {
 };

@@ -8,7 +8,7 @@ var Nav = React.createClass({
     render: function () {
 
         var routeConfig = {
-            "app": "Home",
+            "Home": "Home",
             "About": "About"
         };
         var items = {};
