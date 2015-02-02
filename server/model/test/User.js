@@ -65,8 +65,25 @@ describe('user 测试', function() {
                    done();
                }
            }
-
        });
     });
+
+    it('user.setToken 测试', function(done) {
+        user.setToken('test', 'token12345', function(err) {
+            if(err) {
+                return done(err);
+            } else {
+                user.get('test', function(err, obj) {
+                    if(err) {
+                        return done(err);
+                    } else {
+                        if(obj.token === 'token12345') {
+                            done();
+                        }
+                    }
+                });
+            }
+        });
+    })
 
 });
