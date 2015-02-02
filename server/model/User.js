@@ -1,7 +1,7 @@
 /**
  * Created by huzhengwei on 15/1/27.
  */
-var dbConfig =  require('./db');
+var dbConfig =  require('./../../db');
 var MongoClient = dbConfig.MongoClient;
 var url = dbConfig.url;
 

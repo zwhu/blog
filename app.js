@@ -9,6 +9,8 @@ var mongoStore = require("connect-mongo")(session);
 
 var routes = require('./server/routes/index');
 
+var dbConfig = require('./db');
+
 var app = express();
 
 // view engine setup
@@ -36,9 +38,9 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new mongoStore({
-        db: 'blog',
-        host: 'localhost',
-        port: 27017
+        db: dbConfig.db,
+        host: dbConfig.host,
+        port: dbConfig.port
     })
 
 }));

@@ -1,5 +1,4 @@
-
-var dbConfig =  require('../db');
+var dbConfig =  require('../../../db');
 var MongoClient = dbConfig.MongoClient;
 var url = dbConfig.url;
 
