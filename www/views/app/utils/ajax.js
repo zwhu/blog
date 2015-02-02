@@ -19,7 +19,7 @@ function getXmlDoc() {
     return xmlDoc;
 }
 
-function myGet(url) {
+function myGet(url, callback) {
     var xmlDoc = getXmlDoc();
 
     xmlDoc.open('GET', url, true);

@@ -19,9 +19,6 @@ var Index = React.createClass({
         return (
             <div>
                 <Nav />
-                <div>
-                    <button onClick={this._onClick}>发送</button>
-                </div>
                 <RouteHandler />
             </div>
         );

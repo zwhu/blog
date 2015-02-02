@@ -6,5 +6,7 @@ var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
     AUTH_SIGNIN_SUCCESS: null,
-    AUTH_SIGNIN: null
+    AUTH_SIGNIN: null,
+    GET_ARTICLES: null,
+    GET_ARTICLE: null
 });
