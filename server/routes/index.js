@@ -62,6 +62,21 @@ router.get('/articles/:id', function(req, res, next) {
     });
 });
 
+router.get('/posts', function(req, res, next) {
+    var article = new Article(req.article);
+
+    // 取所有
+    article.get(null, function(e, v) {
+        if (!e) {
+            return res.json(v);
+        }
+        //TODO: 以后要对HTTP的请求返回错误做出规范
+        return res.status(404).end();
+    });
+});
+
+
+
 //TODO: 根据 Cookie 验证是否为本人， 和 database 对比，验证还是要做的，走心。
 router.post('/posts', function(req, res, next) {
 
@@ -89,7 +104,6 @@ router.post('/posts', function(req, res, next) {
             //TODO: 以后要对HTTP的请求返回错误做出规范
             return res.status(404).end();
         });
-
     });
 });
 
