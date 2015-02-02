@@ -1,9 +1,26 @@
 var React = require('react/addons');
 var Router = require('react-router');
 
+var AuthStore = require('../../stores/AuthStores');
+
 var Link = Router.Link;
 
 var Nav = React.createClass({
+    getInitialState: function() {
+        return {
+            post: false
+        }
+    },
+    componentWillMount: function() {
+        var that = this;
+        AuthStore.getToken(function(token) {
+            if(token) {
+                that.setState({
+                    post: true
+                })
+            }
+        });
+    },
     mixins: [Router.State],
     render: function () {
 
@@ -11,6 +28,11 @@ var Nav = React.createClass({
             "Home": "Home",
             "About": "About"
         };
+
+        if(this.state.post) {
+            routeConfig.Post = 'Post'
+        }
+
         var items = {};
         var cx = React.addons.classSet;
         for (var i in routeConfig) {
