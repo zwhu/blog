@@ -26,7 +26,7 @@ function myGet(url, callback) {
 
     xmlDoc.onreadystatechange = function() {
         if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
-            callback(xmlDoc.status, xmlDoc.responseText);
+            callback(xmlDoc.status, JSON.parse(xmlDoc.responseText));
         }
     };
     xmlDoc.send();

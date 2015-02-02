@@ -17,9 +17,11 @@ var Index = React.createClass({
     },
     render: function () {
         return (
-            <div>
+            <div className="container">
                 <Nav />
-                <RouteHandler />
+                <div>
+                    <RouteHandler />
+                </div>
             </div>
         );
     },
