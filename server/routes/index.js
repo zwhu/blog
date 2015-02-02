@@ -65,22 +65,32 @@ router.get('/articles/:id', function(req, res, next) {
 //TODO: 根据 Cookie 验证是否为本人， 和 database 对比，验证还是要做的，走心。
 router.post('/posts', function(req, res, next) {
 
-    if(!req.cookie.token)
+    // 从数据库中取出token
+    if(!req.cookie.token) {
         return res.status(404).end();
+    }
 
-    if(!req.article)
-        return res.status(404).end();
+    var user = new User();
 
-    var article = new Article(req.article);
+    user.get(req.cookie.token, function(e, v) {
+        if(v.token !== req.cookie.token) {
+            return res.status(404).end();
+        }
 
-     article.post(function(e) {
-         if (!e) {
-             return res.status(200).end();
-         }
-         //TODO: 以后要对HTTP的请求返回错误做出规范
-         return res.status(404).end();
-     });
+        if(!req.article)
+            return res.status(404).end();
 
+        var article = new Article(req.article);
+
+        article.post(function(e) {
+            if (!e) {
+                return res.status(200).end();
+            }
+            //TODO: 以后要对HTTP的请求返回错误做出规范
+            return res.status(404).end();
+        });
+
+    });
 });
 
 module.exports = router;
