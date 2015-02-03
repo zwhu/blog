@@ -6,20 +6,12 @@ var AuthStore = require('../../stores/AuthStores');
 var Link = Router.Link;
 
 var Nav = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
-            post: false
+            post: !!AuthStore.getToken()
         }
     },
-    componentWillMount: function() {
-        var that = this;
-        AuthStore.getToken(function(token) {
-            if(token) {
-                that.setState({
-                    post: true
-                })
-            }
-        });
+    componentWillMount: function () {
     },
     mixins: [Router.State],
     render: function () {
@@ -29,7 +21,7 @@ var Nav = React.createClass({
             "About": "About"
         };
 
-        if(this.state.post) {
+        if (this.state.post) {
             routeConfig.Post = 'Post'
         }
 
@@ -39,7 +31,7 @@ var Nav = React.createClass({
             var cls = cx({
                 'active': false
             });
-            if(this.getRoutes().pop().name === i) {
+            if (this.getRoutes().pop().name === i) {
                 cls = cx({
                     'active': true
                 });

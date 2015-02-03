@@ -11,13 +11,7 @@ var Link = Router.Link;
 var Login = React.createClass({
     mixins: [ Router.Navigation ],
     getInitialState: function() {
-        return ({
-            title: '今天写什么呢?',
-            tags:[],
-            titlePic: '',
-            summary: '',
-            content:''
-        });
+        return (null);
     },
     componentWillMount:function() {
         ArticleStore.addChangeListener('posts', function() {
@@ -29,64 +23,42 @@ var Login = React.createClass({
             console.log('posts')
         });
     },
-    _handleTitleChange: function(e) {
-        var obj = this.state;
-        obj.title = this.refs.title.getDOMNode().value;
-        this.setState(obj);
-    },
-    _handleTagsChange: function() {
-        var obj = this.state;
-        obj.tags = this.refs.tags.getDOMNode().value.split(',');
-        this.setState(obj);
-    },
-    _handleTitlePicChange: function() {
-        var obj = this.state;
-        obj.titlePic = this.refs.titlePic.getDOMNode().value;
-        this.setState(obj);
-    },
-    _handleSummaryChange: function() {
-        var obj = this.state;
-        obj.summary = this.refs.summary.getDOMNode().value;
-        this.setState(obj);
-    },
-    _handleContentChange: function() {
-        var obj = this.state;
-        obj.content = this.refs.content.getDOMNode().value;
-        this.setState(obj);
-    },
-    _handleClick: function(e) {
+    _handleSubmit: function(e) {
         e.preventDefault();
-        ArticleActions.postArticle(this.state);
+        ArticleActions.postArticle({
+            title: this.refs.title.getDOMNode().value,
+            tags: this.refs.tags.getDOMNode().value.split(','),
+            titlePic: this.refs.titlePic.getDOMNode().value,
+            summary: this.refs.summary.getDOMNode().value,
+            content: this.refs.content.getDOMNode().value
+        });
     },
-    //TODO： Article store
     render: function () {
         return (
-            <form className="well">
+            <form className="well" onSubmit={this._handleSubmit}>
                 <div className="form-group">
                     <input placeholder="今天写什么呢?"
                         className="form-control"
                         ref="title"
-                        onChange={this._handleTitleChange}
                     />
                 </div>
                 <div className="form-group">
                     <input placeholder="标签"
                         className="form-control"
                         ref="tags"
-                        onChange={this._handleTagsChange}/>
+                    />
                 </div>
                 <div className="form-group">
                     <input placeholder="缩略图"
                         className="form-control"
                         ref="titlePic"
-                        onChange={this._handleTitlePicChange}/>
+                    />
                 </div>
                 <div className="form-group">
                     <h3>摘要</h3>
                     <textarea
                         className="form-control"
                         style={{'minWidth':'100%','minHeight':'200px'}}
-                        onChange={this._handleSummaryChange}
                         ref="summary"
                          />
                 </div>
@@ -95,12 +67,11 @@ var Login = React.createClass({
                     <textarea
                         className="form-control"
                         style={{'minWidth':'100%','minHeight':'400px'}}
-                        onChange={this._handleContentChange}
                         ref="content"
                         />
                 </div>
                 <div>
-                    <button type="button" className="btn btn-primary" onClick={this._handleClick}> 保存 </button>
+                    <button type="submit" className="btn btn-primary"> 保存 </button>
                 </div>
             </form>
         );

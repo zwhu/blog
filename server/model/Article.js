@@ -27,6 +27,7 @@ Article.prototype.post = function (article, callback) {
         title: article.title,
         content: article.content,
         tags: article.tags,
+        summary: article.tags,
         titlePic: article.titlePic
     };
     //打开数据库
@@ -48,7 +49,7 @@ Article.prototype.post = function (article, callback) {
                 if (err) {
                     return callback(err);//失败！返回 err
                 }
-                callback(null);//返回 err 为 null
+                return callback(null);//返回 err 为 null
             });
         });
     });

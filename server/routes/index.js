@@ -84,9 +84,6 @@ router.get('/posts', function(req, res, next) {
     });
 });
 
-
-
-//TODO: 根据 Cookie 验证是否为本人， 和 database 对比，验证还是要做的，走心。
 router.post('/posts', function(req, res, next) {
 
     // 从数据库中取出token
@@ -96,17 +93,18 @@ router.post('/posts', function(req, res, next) {
 
     var user = new User();
 
-    user.get('zwhu', function(e, v) {
+    user.get(req.cookies.user, function(e, v) {
+        console.log(v)
         if(v && v.token !== req.cookies.token) {
             return res.status(404).end();
         }
 
-        if(!req.article)
+        if(!req.body) {
             return res.status(404).end();
+        }
 
-        var article = new Article(req.article);
-
-        article.post(function(e) {
+        var article = new Article();
+        article.post(req.body, function(e) {
             if (!e) {
                 return res.status(200).end();
             }
