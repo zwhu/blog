@@ -3,8 +3,8 @@
 var React = require('react');
 var Router = require('react-router');
 var ajax = require('../../utils/ajax');
-var AuthAction = require('../../actions/AuthAction');
-var AuthStore = require('../../stores/AuthStores');
+var ArticleActions = require('../../actions/ArticleActions');
+var ArticleStore = require('../../stores/ArticleStore');
 
 var Link = Router.Link;
 
@@ -20,8 +20,15 @@ var Login = React.createClass({
         });
     },
     componentWillMount:function() {
+        ArticleStore.addChangeListener('posts', function() {
+            console.log('posts')
+        });
     },
-
+    componentWillUnmount: function() {
+        ArticleStore.removeChangeListener('posts', function() {
+            console.log('posts')
+        });
+    },
     _handleTitleChange: function(e) {
         var obj = this.state;
         obj.title = this.refs.title.getDOMNode().value;
@@ -49,8 +56,9 @@ var Login = React.createClass({
     },
     _handleClick: function(e) {
         e.preventDefault();
-        console.log(this.state)
+        ArticleActions.postArticle(this.state);
     },
+    //TODO： Article store
     render: function () {
         return (
             <form className="well">

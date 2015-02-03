@@ -7,12 +7,18 @@ var AppConstants = require('../constants/AppConstants');
 var assign = require('object-assign');
 var ajax = require('../utils/ajax');
 
-var CHANGE_EVENT = 'change';
-
 function getArticles() {
     ajax.get('/posts', function(status, data) {
         if(status === 200) {
             ArticleStore.emitChange(data);
+        }
+    });
+}
+
+function postArticle(data) {
+    ajax.post('/posts', data, function(status) {
+        if(status === 200) {
+            ArticleStore.emitChange(status);
         }
     });
 }
@@ -25,16 +31,15 @@ var ArticleStore = assign({}, EventEmitter.prototype, {
                 return callback(data || null);
         });
     },
-
-    emitChange: function(data) {
+    emitChange: function(CHANGE_EVENT, data) {
         this.emit(CHANGE_EVENT, data);
     },
 
-    addChangeListener: function(callback) {
+    addChangeListener: function(CHANGE_EVENT, callback) {
         this.on(CHANGE_EVENT, callback);
     },
 
-    removeChangeListener: function(callback) {
+    removeChangeListener: function(CHANGE_EVENT, callback) {
         this.removeListener(CHANGE_EVENT, callback);
     }
 });
@@ -47,6 +52,9 @@ AppDispatcher.register(function(payload) {
     switch(action.actionType) {
         case AppConstants.GET_ARTICLES:
             getArticles();
+            break;
+        case AppConstants.POST_ARTICLES:
+            postArticle(action.data);
             break;
         default:
             break;

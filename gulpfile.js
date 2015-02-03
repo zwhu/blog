@@ -47,7 +47,7 @@ gulp.task('scripts', ['browserify'],  function() {
 gulp.task('default', function() {
     gulp.run('browserify', 'scripts');
     // 监听文件变化
-    gulp.watch('./www/views/**/*.jsx', function() {
+    gulp.watch('./www/views/**/*.js*', function() {
         gulp.run('browserify', 'scripts');
     });
 });

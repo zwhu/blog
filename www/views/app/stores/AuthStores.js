@@ -19,7 +19,7 @@ function signin(data) {
 
  function _getToken() {
      var token;
-     var ms = document.cookie.match(/token=(.+);/);
+     var ms = document.cookie.match(/user=(.+)/);
      if(ms) {
          token = ms[1];
      }
@@ -27,20 +27,8 @@ function signin(data) {
  }
 
 var AuthStore = assign({}, EventEmitter.prototype, {
-    getToken: function(cb) {
-        var token = _getToken();
-        if(token) {
-            return cb(token);
-        } else {
-            var intervalId = setInterval(function() {
-                var token = _getToken();
-                if(token) {
-                    clearInterval(intervalId);
-                    return cb(token)
-                }
-            }, 1000);
-        }
-
+    getToken: function() {
+        return _getToken();
     },
     emitChange: function() {
         this.emit(CHANGE_EVENT);

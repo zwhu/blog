@@ -22,7 +22,6 @@ var Home = React.createClass({
         });
     },
     render: function () {
-        console.log(this.state.articles);
         return (
             <ul>{this.state.articles.map(function(v) {
                 return (

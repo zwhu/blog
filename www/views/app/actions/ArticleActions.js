@@ -12,6 +12,12 @@ var AuthActions = {
             actionType: AppConstants.GET_ARTICLES,
             data: data
         });
+    },
+    postArticle: function(data) {
+        AppDispatcher.handleServerAction({
+            actionType: AppConstants.POST_ARTICLES,
+            data: data
+        })
     }
 };
 

@@ -7,13 +7,13 @@ var AppConstants = require('../constants/AppConstants');
 
 var AuthActions = {
     signin: function(data) {
-        AppDispatcher.handleViewAction({
+        AppDispatcher.handleServerAction({
             actionType: AppConstants.AUTH_SIGNIN,
             data: data
         });
     },
     signinSuccess: function(data) {
-        AppDispatcher.handleViewAction({
+        AppDispatcher.handleServerAction({
             actionType: AppConstants.AUTH_SIGNIN_SUCCESS,
             data: data
         });

@@ -9,61 +9,56 @@ var AuthStore = require('../../stores/AuthStores');
 var Link = Router.Link;
 
 var Login = React.createClass({
-    mixins: [ Router.Navigation ],
-    getInitialState: function() {
-        return ({
-            name: '',
-            password: ''
-        });
+    mixins: [Router.Navigation],
+
+    statics: {
+        willTransitionTo: function (transition) {
+            if (AuthStore.getToken()) {
+                transition.redirect('Home');
+            }
+        }
     },
-    componentWillMount:function() {
-        this._signinSuccess();
+
+    //可以返回错误处理
+    getInitialState: function () {
+        return null;
+    },
+    componentWillMount: function () {
         AuthStore.addChangeListener(this._signinSuccess.bind(this));
     },
-    componentWillUnmount: function() {
-        AuthStore.removeChangeListener(function() {
+    componentWillUnmount: function () {
+        AuthStore.removeChangeListener(function () {
 
         });
     },
-    _handleNameChange: function(e) {
+    _handleSubmit: function (e) {
         e.preventDefault();
-        this.setState({
-            name: e.target.value,
-            password: this.state.password || ''
+        var name = this.refs.name.getDOMNode().value;
+        var password = this.refs.password.getDOMNode().value;
+        AuthAction.signin({
+            name: name,
+            password: password
         });
     },
-    _handlePasswordChange: function(e) {
-        e.preventDefault();
-        this.setState({
-            name: this.state.name || '',
-            password: e.target.value
-        });
-    },
-    _handleClick: function(e) {
-        e.preventDefault();
-        AuthAction.signin(this.state);
-    },
-    _signinSuccess: function() {
+    _signinSuccess: function () {
         var that = this;
-        AuthStore.getToken(function(token) {
-            if(token) {
-                that.replaceWith('/');
-            }
-        });
+        if (AuthStore.getToken()) {
+            that.replaceWith('/');
+        }
     },
     render: function () {
         return (
-                <form className="container well login" style={{'width':'400px'}} onSubmit={this._handleSubmit}>
-                    <div>
-                        <input className="form-control" type="text" placeholder="名称" value={this.state.name} onChange={this._handleNameChange}/>
-                    </div>
-                    <div>
-                        <input className="form-control" type="password" placeholder="密码" vakue={this.state.password}  onChange={this._handlePasswordChange}/>
-                    </div>
-                    <div className="container">
-                        <button type="button" className="btn btn-primary" onClick={this._handleClick}> 登录 </button>
-                    </div>
-                </form>
+            <form className="container well login" style={{'width': '400px'}} onSubmit={this._handleSubmit}>
+                <div>
+                    <input className="form-control" ref="name" type="text" placeholder="名称" />
+                </div>
+                <div>
+                    <input className="form-control" ref="password" type="password" placeholder="密码" />
+                </div>
+                <div className="container">
+                    <button type="submit" className="btn"> 登录 </button>
+                </div>
+            </form>
         );
     }
 });

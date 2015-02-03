@@ -19,26 +19,35 @@ var config = {
     }
 };
 
+function getToken() {
+    return Math.random().toString(36).substring(7);
+}
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', config[app.get('env') || 'development']);
 });
 
-
-
-//TODO: 1.登录成功后输出cookie的token
 router.post('/login', function(req, res, next) {
     var user = new User();
-
     user.get(req.body.name, function(e, v) {
         if (!e &&  v && v.password === req.body.password) {
-            //TODO: 使用token登陆的时候需要判断ip地址是否发生变化，如果发生变化，token登陆失败
-            // 每次登录都要更新新的token
-            res.cookie('token', Math.random().toString(36).substring(7), { maxAge: 24 * 60 * 60 * 10000 });
-            return res.status(200).end();
+            var token = Math.random().toString(36).substring(7);
+            user.setToken(req.body.name, token, function(err) {
+                if(!err) {
+                    return res.
+                        cookie('user', 'zwhu', { maxAge: 24 * 60 * 60 * 10000}).
+                        cookie('token', token, { maxAge: 24 * 60 * 60 * 10000, httpOnly: true }).
+                        status(200).
+                        end();
+                } else {
+                    return res.status(404).end();
+                }
+            });
+        } else {
+            return res.status(404).end();
         }
-        //TODO: 以后要对HTTP的请求返回错误做出规范
-        return res.status(404).end();
     });
 });
 
@@ -81,14 +90,14 @@ router.get('/posts', function(req, res, next) {
 router.post('/posts', function(req, res, next) {
 
     // 从数据库中取出token
-    if(!req.cookie.token) {
+    if(!req.cookies.token) {
         return res.status(404).end();
     }
 
     var user = new User();
 
-    user.get(req.cookie.token, function(e, v) {
-        if(v.token !== req.cookie.token) {
+    user.get('zwhu', function(e, v) {
+        if(v && v.token !== req.cookies.token) {
             return res.status(404).end();
         }
 
