@@ -7,10 +7,9 @@ var AppConstants = require('../constants/AppConstants');
 
 
 var AuthActions = {
-    getArticles: function(data) {
+    getArticles: function() {
         AppDispatcher.handleServerAction({
-            actionType: AppConstants.GET_ARTICLES,
-            data: data
+            actionType: AppConstants.GET_ARTICLES
         });
     },
     postArticle: function(data) {

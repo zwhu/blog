@@ -7,10 +7,17 @@ var AppConstants = require('../constants/AppConstants');
 var assign = require('object-assign');
 var ajax = require('../utils/ajax');
 
+
+var CHANGE_EVENT = 'change';
+
+var articles = [];
+var postStatus = false;
+
 function getArticles() {
     ajax.get('/posts', function(status, data) {
         if(status === 200) {
-            ArticleStore.emitChange(data);
+            articles = data;
+            ArticleStore.emitChange();
         }
     });
 }
@@ -18,28 +25,29 @@ function getArticles() {
 function postArticle(data) {
     ajax.post('/posts', data, function(status) {
         if(status === 200) {
-            ArticleStore.emitChange(status);
+            postStatus = true;
+            ArticleStore.emitChange();
         }
     });
 }
 
 
-
 var ArticleStore = assign({}, EventEmitter.prototype, {
-    getArticles: function(callback) {
-        ajax.get('/posts', function(status, data) {
-                return callback(data || null);
-        });
+    getArticles: function() {
+        return articles;
     },
-    emitChange: function(CHANGE_EVENT, data) {
-        this.emit(CHANGE_EVENT, data);
+    getPostStatus: function() {
+        return postStatus;
+    },
+    emitChange: function() {
+        this.emit(CHANGE_EVENT);
     },
 
-    addChangeListener: function(CHANGE_EVENT, callback) {
+    addChangeListener: function(callback) {
         this.on(CHANGE_EVENT, callback);
     },
 
-    removeChangeListener: function(CHANGE_EVENT, callback) {
+    removeChangeListener: function(callback) {
         this.removeListener(CHANGE_EVENT, callback);
     }
 });

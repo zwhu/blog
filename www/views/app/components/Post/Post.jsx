@@ -14,13 +14,17 @@ var Login = React.createClass({
         return (null);
     },
     componentWillMount:function() {
-        ArticleStore.addChangeListener('posts', function() {
-            console.log('posts')
+        var that = this;
+        ArticleStore.addChangeListener(function() {
+            if(ArticleStore.getPostStatus()) {
+                that.replaceWith('Home');
+            } else {
+                alert('can le ba!');
+            }
         });
     },
     componentWillUnmount: function() {
-        ArticleStore.removeChangeListener('posts', function() {
-            console.log('posts')
+        ArticleStore.removeChangeListener(function() {
         });
     },
     _handleSubmit: function(e) {

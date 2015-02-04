@@ -5,19 +5,21 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var ArticleStore = require('../../stores/ArticleStore');
+var ArticleActions = require('../../actions/ArticleActions')
 
 
 var Home = React.createClass({
     getInitialState: function() {
         return ({
-            articles: []
+            articles: ArticleStore.getArticles()
         });
     },
     componentWillMount:function() {
         var that = this;
-        ArticleStore.getArticles(function(data) {
+        ArticleActions.getArticles();
+        ArticleStore.addChangeListener(function() {
             that.setState({
-                articles: data
+                articles: ArticleStore.getArticles()
             });
         });
     },
