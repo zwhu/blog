@@ -94,7 +94,6 @@ router.post('/posts', function(req, res, next) {
     var user = new User();
 
     user.get(req.cookies.user, function(e, v) {
-        console.log(v)
         if(v && v.token !== req.cookies.token) {
             return res.status(404).end();
         }

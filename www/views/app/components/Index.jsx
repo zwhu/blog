@@ -24,12 +24,6 @@ var Index = React.createClass({
                 </div>
             </div>
         );
-    },
-    _onClick: function() {
-        ajax.post('/posts', {}, function(status) {
-            if(status === 200)
-                console.log('cool')
-        });
     }
 });
 
