@@ -5,11 +5,20 @@ var Router = require('react-router');
 var ajax = require('../../utils/ajax');
 var ArticleActions = require('../../actions/ArticleActions');
 var ArticleStore = require('../../stores/ArticleStore');
+var AuthStore = require('../../stores/AuthStores');
+
 
 var Link = Router.Link;
 
 var Login = React.createClass({
     mixins: [ Router.Navigation ],
+    statics: {
+        willTransitionTo: function (transition) {
+            if (!AuthStore.getToken()) {
+                transition.redirect('Home');
+            }
+        }
+    },
     getInitialState: function() {
         return (null);
     },
