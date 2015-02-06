@@ -16,18 +16,19 @@ var Home = React.createClass({
     },
     componentWillMount:function() {
         var that = this;
+        ArticleActions.getArticles();
         ArticleStore.addChangeListener(function() {
+            console.log(ArticleStore.getArticles());
             that.setState({
                 articles: ArticleStore.getArticles()
             });
         });
-        ArticleActions.getArticles();
-
     },
     // title 的点击到具体的文章页面应该是 link， 文章的链接应该写好
     render: function () {
+        console.log(this.state);
         return (
-            <div style={{"width": "720px", "min-height": "640px"}}>
+            <div style={{"width": "720px", "minHeight": "640px"}}>
                 {this.state.articles.map(function (v) {
                     return (
                             <div className="media well">

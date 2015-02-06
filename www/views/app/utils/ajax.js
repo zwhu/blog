@@ -4,51 +4,57 @@
  */
 'use strict';
 
-function getXmlDoc() {
-    var xmlDoc;
+var Q = require('q');
 
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlDoc = new XMLHttpRequest();
-    }
-    else {
-        // code for IE6, IE5
-        xmlDoc = new ActiveXObject("Microsoft.XMLHTTP");
-    }
 
-    return xmlDoc;
-}
+function myGet(url) {
+    var req = new XMLHttpRequest();
+    var deferred = Q.defer();
 
-function myGet(url, callback) {
-    var xmlDoc = getXmlDoc();
+    req.open('GET', url, true);
 
-    xmlDoc.open('GET', url, true);
+    req.onload = onload;
+    req.onerror = onerror;
+    req.send();
 
-    xmlDoc.onreadystatechange = function() {
-        if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
-            callback(xmlDoc.status, JSON.parse(xmlDoc.responseText));
+    function onload() {
+        if (req.status === 200) {
+            deferred.resolve(JSON.parse(req.responseText));
+        } else {
+            deferred.reject(new Error("Status code was " + req.status));
         }
-    };
-    xmlDoc.send();
+    }
+
+    function onerror() {
+        deferred.reject(new Error("Can't XHR " + JSON.stringify(url)));
+    }
+
+    return deferred.promise;
+    //xmlDoc.onreadystatechange = function() {
+    //    if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
+    //        callback(xmlDoc.status, JSON.parse(xmlDoc.responseText));
+    //    }
+    //};
+    //xmlDoc.send();
 }
 
-function myPost(url, data, callback) {
-    var xmlDoc = getXmlDoc();
-
-    data = JSON.stringify(data);
-    xmlDoc.open('POST', url, true);
-    xmlDoc.setRequestHeader("Content-type", "application/json");
-
-    xmlDoc.onreadystatechange = function() {
-        if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
-            callback(xmlDoc.status);
-        }
-    };
-
-    xmlDoc.send(data);
-}
+//function myPost(url, data, callback) {
+//    var xmlDoc = getXmlDoc();
+//
+//    data = JSON.stringify(data);
+//    xmlDoc.open('POST', url, true);
+//    xmlDoc.setRequestHeader("Content-type", "application/json");
+//
+//    xmlDoc.onreadystatechange = function() {
+//        if (xmlDoc.readyState === 4 && xmlDoc.status === 200) {
+//            callback(xmlDoc.status);
+//        }
+//    };
+//
+//    xmlDoc.send(data);
+//}
 
 module.exports = {
-    post: myPost,
+    //post: myPost,
     get: myGet
 };

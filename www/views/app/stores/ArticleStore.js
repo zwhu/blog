@@ -14,22 +14,31 @@ var articles = [];
 var postStatus = false;
 
 function getArticles() {
-    ajax.get('/posts', function(status, data) {
-        if(status === 200) {
-            articles = data;
-            ArticleStore.emitChange();
-        }
+    //ajax.get('/posts', function(status, data) {
+    //    if(status === 200) {
+    //        articles = data;
+    //        ArticleStore.emitChange();
+    //    }
+    //});
+
+    ajax.get('/posts').then(function(data) {
+        articles = data;
+        ArticleStore.emitChange();
+    }, function (error) {
+        // If there's an error or a non-200 status code, log the error.
+        console.error(error);
     });
+
 }
 
-function postArticle(data) {
-    ajax.post('/posts', data, function(status) {
-        if(status === 200) {
-            postStatus = true;
-            ArticleStore.emitChange();
-        }
-    });
-}
+//function postArticle(data) {
+//    ajax.post('/posts', data, function(status) {
+//        if(status === 200) {
+//            postStatus = true;
+//            ArticleStore.emitChange();
+//        }
+//    });
+//}
 
 
 var ArticleStore = assign({}, EventEmitter.prototype, {
