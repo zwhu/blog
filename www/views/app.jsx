@@ -18,9 +18,8 @@ var About = require('./app/components/About/About.jsx');
 var Login = require('./app/components/Login/Login.jsx');
 var Home = require('./app/components/Home/Home.jsx');
 var Post = require('./app/components/Post/Post.jsx');
-
-
-
+var Articles = require('./app/components/Articles/Articles.jsx');
+var Article = require('./app/components/Articles/Article.jsx');
 
 var routes = (
     <Route name="app" path="/" handler={Index}>
@@ -28,6 +27,8 @@ var routes = (
         <Route name="About" path="/about" handler={About}></Route>
         <Route name="Login" path="/login" handler={Login}></Route>
         <Route name="Post" path="/post" handler={Post}></Route>
+        <Route name="Articles" path="/articles" handler={Articles} />
+        <Route name="Article" path="/articles/:articleId" handler={Article} />
     </Route>
 );
 
