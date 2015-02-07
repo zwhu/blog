@@ -12,10 +12,9 @@ var AuthActions = {
             data: data
         });
     },
-    signinSuccess: function(data) {
+    signinSuccess: function() {
         AppDispatcher.handleServerAction({
-            actionType: AppConstants.AUTH_SIGNIN_SUCCESS,
-            data: data
+            actionType: AppConstants.AUTH_SIGNIN_SUCCESS
         });
     }
 };

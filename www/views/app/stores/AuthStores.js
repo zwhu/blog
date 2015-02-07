@@ -11,9 +11,8 @@ var ajax = require('../utils/ajax');
 var CHANGE_EVENT = 'change';
 
 function signin(data) {
-    ajax.post('/login', data, function(status) {
-        if(status === 200)
-            AuthAction.signinSuccess(data);
+    ajax.post('/login', data).then(function() {
+            AuthAction.signinSuccess();
     });
 }
 

@@ -14,13 +14,6 @@ var articles = [];
 var postStatus = false;
 
 function getArticles() {
-    //ajax.get('/posts', function(status, data) {
-    //    if(status === 200) {
-    //        articles = data;
-    //        ArticleStore.emitChange();
-    //    }
-    //});
-
     ajax.get('/posts').then(function(data) {
         articles = data;
         ArticleStore.emitChange();
