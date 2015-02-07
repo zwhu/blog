@@ -4,19 +4,13 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var AppConstants = require('../constants/AppConstants');
-var AuthAction = require('../actions/AuthAction');
 var assign = require('object-assign');
 var ajax = require('../utils/ajax');
 
 var CHANGE_EVENT = 'change';
 
-function _signin(data) {
-    ajax.post('/login', data).then(function() {
-            AuthAction.signinSuccess();
-    }, function(error) {
-        console.error(error);
-    });
-}
+var _errMsg;
+var _signing = false;
 
  function _getToken() {
      var token;
@@ -30,6 +24,9 @@ function _signin(data) {
 var AuthStore = assign({}, EventEmitter.prototype, {
     getToken: function() {
         return _getToken();
+    },
+    getErrorMsg: function() {
+        return _errMsg;
     },
     emitChange: function() {
         this.emit(CHANGE_EVENT);
@@ -47,12 +44,16 @@ var AuthStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(payload) {
     var action = payload.action;
-
+    // handle view
     switch(action.actionType) {
         case AppConstants.SIGNIN:
-            _signin(action.data);
+            _signing  = true;
             break;
         case AppConstants.SIGNIN_SUCCESS:
+            AuthStore.emitChange();
+            break;
+        case AppConstants.SIGNIN_FAIL:
+            _errMsg = action.errMsg;
             AuthStore.emitChange();
             break;
         default:

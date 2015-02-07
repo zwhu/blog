@@ -4,20 +4,20 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AppConstants = require('../constants/AppConstants');
 
-
-var AuthActions = {
-    signin: function(data) {
-        AppDispatcher.handleServerAction({
-            actionType: AppConstants.AUTH_SIGNIN,
-            data: data
-        });
-    },
+var AuthServerActionCreators = {
     signinSuccess: function() {
         AppDispatcher.handleServerAction({
-            actionType: AppConstants.AUTH_SIGNIN_SUCCESS
+            actionType: AppConstants.SIGNIN_SUCCESS
+        });
+    },
+    signinFail: function(errMsg) {
+        AppDispatcher.handleServerAction({
+            actionType: AppConstants.SIGNIN_FAIL,
+            errMsg: errMsg
         });
     }
+
 };
 
 
-module.exports = AuthActions;
+module.exports = AuthServerActionCreators;

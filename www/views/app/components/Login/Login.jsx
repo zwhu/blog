@@ -3,14 +3,13 @@
 var React = require('react');
 var Router = require('react-router');
 var ajax = require('../../utils/ajax');
-var AuthAction = require('../../actions/AuthAction');
+var AuthViewActionCreators = require('../../actions/AuthViewActionCreators');
 var AuthStore = require('../../stores/AuthStore');
 
 var Link = Router.Link;
 
 var Login = React.createClass({
     mixins: [Router.Navigation],
-
     statics: {
         willTransitionTo: function (transition) {
             if (AuthStore.getToken()) {
@@ -18,31 +17,29 @@ var Login = React.createClass({
             }
         }
     },
-
-    //可以返回错误处理
     getInitialState: function () {
         return null;
     },
     componentWillMount: function () {
-        AuthStore.addChangeListener(this._signinSuccess);
+        AuthStore.addChangeListener(this._signin);
     },
     componentWillUnmount: function () {
-        AuthStore.removeChangeListener(function () {
-
-        });
+        AuthStore.removeChangeListener(this._signin);
     },
     _handleSubmit: function (e) {
         e.preventDefault();
         var name = this.refs.name.getDOMNode().value;
         var password = this.refs.password.getDOMNode().value;
-        AuthAction.signin({
+        AuthViewActionCreators.signin({
             name: name,
             password: password
         });
     },
-    _signinSuccess: function () {
+    _signin: function () {
         if (AuthStore.getToken()) {
             this.replaceWith('/');
+        } else {
+            alert(AuthStore.getErrorMsg());
         }
     },
     render: function () {
