@@ -4,7 +4,7 @@ var React = require('react');
 var Router = require('react-router');
 var ajax = require('../../utils/ajax');
 var AuthAction = require('../../actions/AuthAction');
-var AuthStore = require('../../stores/AuthStores');
+var AuthStore = require('../../stores/AuthStore');
 
 var Link = Router.Link;
 
@@ -24,7 +24,7 @@ var Login = React.createClass({
         return null;
     },
     componentWillMount: function () {
-        AuthStore.addChangeListener(this._signinSuccess.bind(this));
+        AuthStore.addChangeListener(this._signinSuccess);
     },
     componentWillUnmount: function () {
         AuthStore.removeChangeListener(function () {
@@ -41,9 +41,8 @@ var Login = React.createClass({
         });
     },
     _signinSuccess: function () {
-        var that = this;
         if (AuthStore.getToken()) {
-            that.replaceWith('/');
+            this.replaceWith('/');
         }
     },
     render: function () {

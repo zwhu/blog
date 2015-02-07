@@ -11,55 +11,53 @@ var ajax = require('../utils/ajax');
 var CHANGE_EVENT = 'change';
 
 var articles = [];
-var postStatus = false;
+var _postStatus = false;
 
 function getArticles() {
-    ajax.get('/posts').then(function(data) {
+    ajax.get('/posts').then(function (data) {
         articles = data;
         ArticleStore.emitChange();
     }, function (error) {
-        // If there's an error or a non-200 status code, log the error.
         console.error(error);
     });
 
 }
 
-//function postArticle(data) {
-//    ajax.post('/posts', data, function(status) {
-//        if(status === 200) {
-//            postStatus = true;
-//            ArticleStore.emitChange();
-//        }
-//    });
-//}
+function postArticle(data) {
+    ajax.post('/posts', data).then(function () {
+        _postStatus = true;
+        ArticleStore.emitChange();
+    }, function (error) {
+        console.error(error);
+    });
+}
 
 
 var ArticleStore = assign({}, EventEmitter.prototype, {
-    getArticles: function() {
+    getArticles: function () {
         return articles;
     },
-    getPostStatus: function() {
-        return postStatus;
+    getPostStatus: function () {
+        return _postStatus;
     },
-    emitChange: function() {
+    emitChange: function () {
         this.emit(CHANGE_EVENT);
     },
 
-    addChangeListener: function(callback) {
+    addChangeListener: function (callback) {
         this.on(CHANGE_EVENT, callback);
     },
 
-    removeChangeListener: function(callback) {
+    removeChangeListener: function (callback) {
         this.removeListener(CHANGE_EVENT, callback);
     }
 });
 
 
-// Register to handle all updates
-AppDispatcher.register(function(payload) {
+AppDispatcher.register(function (payload) {
     var action = payload.action;
 
-    switch(action.actionType) {
+    switch (action.actionType) {
         case AppConstants.GET_ARTICLES:
             getArticles();
             break;
@@ -69,7 +67,7 @@ AppDispatcher.register(function(payload) {
         default:
             break;
     }
-    return true; // No errors.  Needed by promise in Dispatcher.
+    return true;
 });
 
 module.exports = ArticleStore;

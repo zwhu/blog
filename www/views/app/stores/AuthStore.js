@@ -10,9 +10,11 @@ var ajax = require('../utils/ajax');
 
 var CHANGE_EVENT = 'change';
 
-function signin(data) {
+function _signin(data) {
     ajax.post('/login', data).then(function() {
             AuthAction.signinSuccess();
+    }, function(error) {
+        console.error(error);
     });
 }
 
@@ -43,21 +45,20 @@ var AuthStore = assign({}, EventEmitter.prototype, {
 });
 
 
-// Register to handle all updates
 AppDispatcher.register(function(payload) {
     var action = payload.action;
 
     switch(action.actionType) {
-        case AppConstants.AUTH_SIGNIN:
-            signin(action.data);
+        case AppConstants.SIGNIN:
+            _signin(action.data);
             break;
-        case AppConstants.AUTH_SIGNIN_SUCCESS:
+        case AppConstants.SIGNIN_SUCCESS:
             AuthStore.emitChange();
             break;
         default:
             return true;
     }
-    return true; // No errors.  Needed by promise in Dispatcher.
+    return true;
 });
 
 module.exports = AuthStore;

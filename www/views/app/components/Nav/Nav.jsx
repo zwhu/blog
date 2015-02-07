@@ -1,7 +1,7 @@
 var React = require('react/addons');
 var Router = require('react-router');
 
-var AuthStore = require('../../stores/AuthStores');
+var AuthStore = require('../../stores/AuthStore');
 
 var Link = Router.Link;
 
@@ -10,8 +10,6 @@ var Nav = React.createClass({
         return {
             post: !!AuthStore.getToken()
         }
-    },
-    componentWillMount: function () {
     },
     mixins: [Router.State],
     render: function () {

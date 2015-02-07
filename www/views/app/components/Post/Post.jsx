@@ -3,15 +3,15 @@
 var React = require('react');
 var Router = require('react-router');
 var ajax = require('../../utils/ajax');
-var ArticleActions = require('../../actions/ArticleActions');
+var ArticleActions = require('../../actions/ArticleAction');
 var ArticleStore = require('../../stores/ArticleStore');
-var AuthStore = require('../../stores/AuthStores');
+var AuthStore = require('../../stores/AuthStore');
 
 
 var Link = Router.Link;
 
 var Login = React.createClass({
-    mixins: [ Router.Navigation ],
+    mixins: [Router.Navigation],
     statics: {
         willTransitionTo: function (transition) {
             if (!AuthStore.getToken()) {
@@ -19,24 +19,23 @@ var Login = React.createClass({
             }
         }
     },
-    getInitialState: function() {
+    getInitialState: function () {
         return (null);
     },
-    componentWillMount:function() {
-        var that = this;
-        ArticleStore.addChangeListener(function() {
-            if(ArticleStore.getPostStatus()) {
-                that.replaceWith('Home');
-            } else {
-                alert('can le ba!');
-            }
-        });
+    componentWillMount: function () {
+        ArticleStore.addChangeListener(this._postArticle);
     },
-    componentWillUnmount: function() {
-        ArticleStore.removeChangeListener(function() {
-        });
+    componentWillUnmount: function () {
+        ArticleStore.removeChangeListener(this._postArticle);
     },
-    _handleSubmit: function(e) {
+    _postArticle: function () {
+        if (ArticleStore.getPostStatus()) {
+            this.replaceWith('Home');
+        } else {
+            alert('can le ba!');
+        }
+    },
+    _handleSubmit: function (e) {
         e.preventDefault();
         ArticleActions.postArticle({
             title: this.refs.title.getDOMNode().value,
@@ -71,17 +70,17 @@ var Login = React.createClass({
                     <h3>摘要</h3>
                     <textarea
                         className="form-control"
-                        style={{'minWidth':'100%','minHeight':'200px'}}
+                        style={{'minWidth': '100%', 'minHeight': '200px'}}
                         ref="summary"
-                         />
+                    />
                 </div>
                 <div className="form-group">
                     <h3>内容</h3>
                     <textarea
                         className="form-control"
-                        style={{'minWidth':'100%','minHeight':'400px'}}
+                        style={{'minWidth': '100%', 'minHeight': '400px'}}
                         ref="content"
-                        />
+                    />
                 </div>
                 <div>
                     <button type="submit" className="btn btn-primary"> 保存 </button>
