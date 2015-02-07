@@ -3,9 +3,10 @@ var AppConstants = require('../constants/AppConstants');
 
 
 var ArticleServerActionCreators = {
-    getArticlesSuccess: function() {
+    getArticlesSuccess: function(data) {
         AppDispatcher.handleServerAction({
-            actionType: AppConstants.GET_ARTICLES_SUCCESS
+            actionType: AppConstants.GET_ARTICLES_SUCCESS,
+            data: data
         });
     },
     getArticlesFail: function() {
@@ -13,10 +14,9 @@ var ArticleServerActionCreators = {
             actionType: AppConstants.GET_ARTICLES_FAIL
         });
     },
-    postArticleSuccess: function(data) {
+    postArticleSuccess: function() {
         AppDispatcher.handleServerAction({
-            actionType: AppConstants.POST_ARTICLE_SUCCESS,
-            data: data
+            actionType: AppConstants.POST_ARTICLE_SUCCESS
         })
     },
     postArticleFail: function(errMsg) {

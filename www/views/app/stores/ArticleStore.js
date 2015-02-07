@@ -10,13 +10,13 @@ var ajax = require('../utils/ajax');
 
 var CHANGE_EVENT = 'change';
 
-var articles = [];
+var _articles = [];
 var _errMsg = '';
 var _status = '';
 
 var ArticleStore = assign({}, EventEmitter.prototype, {
     getArticles: function () {
-        return articles;
+        return _articles;
     },
     getStatus: function () {
         return _status;
@@ -47,7 +47,7 @@ AppDispatcher.register(function (payload) {
             break;
         case AppConstants.GET_ARTICLES_SUCCESS:
             _status = 'success';
-            articles = action.data;
+            _articles = action.data;
             break;
         case AppConstants.GET_ARTICLES_FAIL:
             _status = 'fasle';
