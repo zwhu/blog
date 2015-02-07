@@ -50,15 +50,14 @@ AppDispatcher.register(function(payload) {
             _signing  = true;
             break;
         case AppConstants.SIGNIN_SUCCESS:
-            AuthStore.emitChange();
             break;
         case AppConstants.SIGNIN_FAIL:
             _errMsg = action.errMsg;
-            AuthStore.emitChange();
             break;
         default:
             return true;
     }
+    AuthStore.emitChange();
     return true;
 });
 

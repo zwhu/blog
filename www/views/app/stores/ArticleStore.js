@@ -11,34 +11,18 @@ var ajax = require('../utils/ajax');
 var CHANGE_EVENT = 'change';
 
 var articles = [];
-var _postStatus = false;
-
-function getArticles() {
-    ajax.get('/posts').then(function (data) {
-        articles = data;
-        ArticleStore.emitChange();
-    }, function (error) {
-        console.error(error);
-    });
-
-}
-
-function postArticle(data) {
-    ajax.post('/posts', data).then(function () {
-        _postStatus = true;
-        ArticleStore.emitChange();
-    }, function (error) {
-        console.error(error);
-    });
-}
-
+var _errMsg = '';
+var _status = '';
 
 var ArticleStore = assign({}, EventEmitter.prototype, {
     getArticles: function () {
         return articles;
     },
-    getPostStatus: function () {
-        return _postStatus;
+    getStatus: function () {
+        return _status;
+    },
+    getErrorMsg: function() {
+        return _errMsg;
     },
     emitChange: function () {
         this.emit(CHANGE_EVENT);
@@ -59,14 +43,29 @@ AppDispatcher.register(function (payload) {
 
     switch (action.actionType) {
         case AppConstants.GET_ARTICLES:
-            getArticles();
+            _status = 'loading';
+            break;
+        case AppConstants.GET_ARTICLES_SUCCESS:
+            _status = 'success';
+            articles = action.data;
+            break;
+        case AppConstants.GET_ARTICLES_FAIL:
+            _status = 'fasle';
+            _errMsg = action.errMsg;
             break;
         case AppConstants.POST_ARTICLES:
-            postArticle(action.data);
+            _status = 'loading';
+            break;
+        case AppConstants.POST_ARTICLES_SUCCESS:
+            _status = 'success';
+            break;
+        case AppConstants.POST_ARTICLES_FAIL:
+            _status = 'fasle';
+            _errMsg = action.errMsg;
             break;
         default:
-            break;
     }
+    ArticleStore.emitChange();
     return true;
 });
 

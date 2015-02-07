@@ -5,7 +5,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var ArticleStore = require('../../stores/ArticleStore');
-var ArticleActions = require('../../actions/ArticleAction');
+var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators');
 
 
 var Home = React.createClass({
@@ -15,16 +15,25 @@ var Home = React.createClass({
         });
     },
     componentWillMount: function () {
-        ArticleActions.getArticles();
+        ArticleViewActionCreators.getArticles();
         ArticleStore.addChangeListener(this._setArticles);
     },
     componentWillUnmount: function () {
         ArticleStore.removeChangeListener(this._setArticles);
     },
     _setArticles: function () {
-        this.setState({
-            articles: ArticleStore.getArticles()
-        });
+        var status = ArticleStore.getStatus();
+        switch (status) {
+            case 'loading':
+                break;
+            case 'success':
+                this.setState({
+                    articles: ArticleStore.getArticles()
+                });
+                break;
+            case 'false':
+                alert(ArticleStore.getErrorMsg());
+        }
     },
     render: function () {
         return (

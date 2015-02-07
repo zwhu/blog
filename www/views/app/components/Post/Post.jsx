@@ -3,7 +3,7 @@
 var React = require('react');
 var Router = require('react-router');
 var ajax = require('../../utils/ajax');
-var ArticleActions = require('../../actions/ArticleAction');
+var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators');
 var ArticleStore = require('../../stores/ArticleStore');
 var AuthStore = require('../../stores/AuthStore');
 
@@ -29,15 +29,20 @@ var Login = React.createClass({
         ArticleStore.removeChangeListener(this._postArticle);
     },
     _postArticle: function () {
-        if (ArticleStore.getPostStatus()) {
-            this.replaceWith('Home');
-        } else {
-            alert('can le ba!');
+        var status = ArticleStore.getStatus();
+        switch (status) {
+            case 'loading':
+                break;
+            case 'success':
+                this.replaceWith('Home');
+                break;
+            case 'false':
+                alert(ArticleStore.getErrorMsg());
         }
     },
     _handleSubmit: function (e) {
         e.preventDefault();
-        ArticleActions.postArticle({
+        ArticleViewActionCreators.postArticle({
             title: this.refs.title.getDOMNode().value,
             tags: this.refs.tags.getDOMNode().value.split(','),
             titlePic: this.refs.titlePic.getDOMNode().value,
