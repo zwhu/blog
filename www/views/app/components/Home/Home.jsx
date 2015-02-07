@@ -23,8 +23,6 @@ var Home = React.createClass({
     },
     _setArticles: function () {
         var status = ArticleStore.getStatus();
-        console.log('status:' + status);
-        console.dir(ArticleStore.getArticles())
         switch (status) {
             case 'loading':
                 break;
