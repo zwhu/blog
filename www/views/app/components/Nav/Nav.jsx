@@ -30,7 +30,7 @@ var Nav = React.createClass({
             var cls = cx({
                 'active': false
             });
-            if (this.getRoutes().pop().name === i) {
+            if (this.getRoutes()[this.getRoutes().length - 2].name === i) {
                 cls = cx({
                     'active': true
                 });

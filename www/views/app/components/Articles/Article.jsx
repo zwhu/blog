@@ -47,19 +47,7 @@ var Article = React.createClass({
             article = article[0];
             return (
                 <div style={{"width": "720px", "minHeight": "640px"}}>
-                    <div className="media well">
-                        <div className="media-left media-middle">
-                            <img style={{
-                                "width": "64px",
-                                "height": "64px"
-                            }} className="media-object" src={article.titlePic} alt="..." />
-                        </div>
-                        <div className="media-body">
-                            <h4 className="media-heading">
-                            {article.title}
-                            </h4>
-                                {article.summary}
-                        </div>
+                    <div dangerouslySetInnerHTML={{__html: article.displayContent}}>
                     </div>
                 </div>
             );
