@@ -20,6 +20,7 @@ var Home = require('./app/components/Home/Home.jsx');
 var Post = require('./app/components/Post/Post.jsx');
 var Articles = require('./app/components/Articles/Articles.jsx');
 var Article = require('./app/components/Articles/Article.jsx');
+var ArticlesHome = require('./app/components/Articles/ArticlesHome.jsx');
 
 var routes = (
     <Route name="app" path="/" handler={Index}>
@@ -27,8 +28,10 @@ var routes = (
         <Route name="About" path="/about" handler={About} />
         <Route name="Login" path="/login" handler={Login} />
         <Route name="Post" path="/post" handler={Post} />
-        <Route name="Articles" path="articles" handler={Articles} ></Route>
-        <Route name="Article" path="/articles/:articleId" handler={Article} />
+        <Route name="Articles" path="articles" handler={Articles} >
+            <DefaultRoute name= "ArticlesHome" handler={ArticlesHome}/>
+            <Route name="Article" path="/articles/:articleId" handler={Article} />
+        </Route>
     </Route>
 );
 

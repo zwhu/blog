@@ -4,14 +4,15 @@ var React = require('react');
 var Router = require('react-router');
 
 var Link = Router.Link;
-var RouteHandler = Router.RouteHandler;
 
-var Articles = React.createClass({
+var ArticlesHome = React.createClass({
     render: function () {
         return (
-            <RouteHandler />
+            <div>
+                <Link to="app">Hello,world!!!</Link>
+            </div>
         );
     }
 });
 
-module.exports = Articles;
+module.exports = ArticlesHome;
