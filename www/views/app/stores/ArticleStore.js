@@ -13,10 +13,14 @@ var CHANGE_EVENT = 'change';
 var _articles = [];
 var _errMsg = '';
 var _status = '';
+var _article = [];
 
 var ArticleStore = assign({}, EventEmitter.prototype, {
     getArticles: function () {
         return _articles;
+    },
+    getArticle: function () {
+        return _article;
     },
     getStatus: function () {
         return _status;
@@ -60,6 +64,17 @@ AppDispatcher.register(function (payload) {
             _status = 'success';
             break;
         case AppConstants.POST_ARTICLES_FAIL:
+            _status = 'fasle';
+            _errMsg = action.errMsg;
+            break;
+        case AppConstants.GET_ARTICLE:
+            _status = 'loading';
+            break;
+        case AppConstants.GET_ARTICLE_SUCCESS:
+            _status = 'success';
+            _article = action.data;
+            break;
+        case AppConstants.GET_ARTICLE_FAIL:
             _status = 'fasle';
             _errMsg = action.errMsg;
             break;

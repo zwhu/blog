@@ -21,6 +21,13 @@ module.exports = {
             ArticleServerActionCreators.getArticlesFail(error);
         });
     },
+    getArticle: function(id) {
+        ajax.get('/articles/' + id).then(function(data) {
+            ArticleServerActionCreators.getArticleSuccess(data);
+        }, function(error) {
+            ArticleServerActionCreators.getArticleFail(error);
+        });
+    },
     postArtilces: function(data) {
         ajax.post('/posts', data).then(function() {
             ArticleServerActionCreators.postArticleSuccess();

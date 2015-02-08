@@ -14,5 +14,7 @@ module.exports = keyMirror({
     POST_ARTICLE: null,
     POST_ARTICLE_SUCCESS: null,
     POST_ARTICLE_FAIL: null,
-    GET_ARTICLE: null
+    GET_ARTICLE: null,
+    GET_ARTICLE_SUCCESS: null,
+    GET_ARTICLE_FAIL: null
 });

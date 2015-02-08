@@ -16,7 +16,8 @@ var Nav = React.createClass({
 
         var routeConfig = {
             "Home": "Home",
-            "About": "About"
+            "About": "About",
+            "Articles": "Articles"
         };
 
         if (this.state.post) {

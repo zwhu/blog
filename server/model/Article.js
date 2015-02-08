@@ -1,12 +1,13 @@
 var dbConfig = require('./../../db');
 var MongoClient = dbConfig.MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var url = dbConfig.url;
 
 
 var assign = require('object-assign');
 
 
-function Article(article) {
+function Article() {
 }
 
 //存储一篇文章及其相关信息
@@ -28,7 +29,8 @@ Article.prototype.post = function (article, callback) {
         content: article.content,
         tags: article.tags,
         summary: article.tags,
-        titlePic: article.titlePic
+        titlePic: article.titlePic,
+        displayContent: article.displayContent
     };
     //打开数据库
     MongoClient.connect(url, function (err, db) {
@@ -70,7 +72,7 @@ Article.prototype.get = function (id, callback) {
             }
             var query = {};
             if (id) {
-                query._id = id;
+                query._id = new ObjectID(id);
             }
             //根据 query 对象查询文章
             collection.find(query).sort({

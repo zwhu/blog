@@ -14,6 +14,17 @@ var ArticleServerActionCreators = {
             actionType: AppConstants.GET_ARTICLES_FAIL
         });
     },
+    getArticleSuccess: function(data) {
+        AppDispatcher.handleServerAction({
+            actionType: AppConstants.GET_ARTICLE_SUCCESS,
+            data: data
+        });
+    },
+    getArticleFail: function() {
+        AppDispatcher.handleServerAction({
+            actionType: AppConstants.GET_ARTICLES_FAIL
+        });
+    },
     postArticleSuccess: function() {
         AppDispatcher.handleServerAction({
             actionType: AppConstants.POST_ARTICLE_SUCCESS

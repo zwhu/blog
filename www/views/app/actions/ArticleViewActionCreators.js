@@ -11,7 +11,13 @@ var ArticleViewActionCreators = {
             actionType: AppConstants.GET_ARTICLES
         });
         webApiUtils.getArticles();
-
+    },
+    getArticle: function(id) {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.GET_ARTICLE,
+            id: id
+        });
+        webApiUtils.getArticle(id);
     },
     postArticle: function(data) {
         AppDispatcher.handleViewAction({

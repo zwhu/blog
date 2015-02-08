@@ -13,7 +13,7 @@ var run = Router.run;
 var DefaultRoute = Router.DefaultRoute;
 
 var Index = require('./app/components/Index.jsx');
-//var NotFound = require('./app/components/routes/NotFound.jsx');gul
+//var NotFound = require('./app/components/routes/NotFound.jsx');
 var About = require('./app/components/About/About.jsx');
 var Login = require('./app/components/Login/Login.jsx');
 var Home = require('./app/components/Home/Home.jsx');
@@ -24,10 +24,10 @@ var Article = require('./app/components/Articles/Article.jsx');
 var routes = (
     <Route name="app" path="/" handler={Index}>
         <DefaultRoute name="Home" handler={Home} />
-        <Route name="About" path="/about" handler={About}></Route>
-        <Route name="Login" path="/login" handler={Login}></Route>
-        <Route name="Post" path="/post" handler={Post}></Route>
-        <Route name="Articles" path="/articles" handler={Articles} />
+        <Route name="About" path="/about" handler={About} />
+        <Route name="Login" path="/login" handler={Login} />
+        <Route name="Post" path="/post" handler={Post} />
+        <Route name="Articles" path="articles" handler={Articles} ></Route>
         <Route name="Article" path="/articles/:articleId" handler={Article} />
     </Route>
 );

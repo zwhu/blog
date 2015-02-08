@@ -1,6 +1,7 @@
 var express = require('express');
 var app =express();
 var router = express.Router();
+var markdown = require( "markdown" ).markdown;
 
 var User = require('../model/User');
 var Article = require('../model/Article');
@@ -101,6 +102,8 @@ router.post('/posts', function(req, res, next) {
         if(!req.body) {
             return res.status(404).end();
         }
+
+        req.body.displayContent = markdown.toHTML(req.body.content);
 
         var article = new Article();
         article.post(req.body, function(e) {
