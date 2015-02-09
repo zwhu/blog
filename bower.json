@@ -10,6 +10,7 @@
   ],
   "license": "MIT",
   "homepage": "jackhu.me",
+  "directory" : "public/vendor",
   "private": true,
   "ignore": [
     "**/.*",
