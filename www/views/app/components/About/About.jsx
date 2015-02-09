@@ -9,7 +9,7 @@ var About = React.createClass({
     render: function () {
         return (
             <div>
-                <Link to="app">Hello,world!!!</Link>
+                「此功能还为开发完成...」
             </div>
         );
     }
