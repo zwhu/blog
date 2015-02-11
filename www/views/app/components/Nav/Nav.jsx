@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var React = require('react');
 var Router = require('react-router');
 
 var AuthStore = require('../../stores/AuthStore');
@@ -14,43 +14,23 @@ var Nav = React.createClass({
     mixins: [Router.State],
     render: function () {
 
-        var routeConfig = {
-            "Home": "Home",
-            "About": "About",
-            "Articles": "Articles"
-        };
+        var routeConfig = ["Home", "Articles", "About"];
 
         if (this.state.post) {
-            routeConfig.Post = 'Post'
-        }
-
-        var items = {};
-        var cx = React.addons.classSet;
-        for (var i in routeConfig) {
-            var cls = cx({
-                'active': false
-            });
-            if (this.getRoutes()[this.getRoutes().length - 2].name === i) {
-                cls = cx({
-                    'active': true
-                });
-            }
-            items[i] = (<li className={cls}>
-                <Link to={i}>{routeConfig[i]}</Link>
-            </li>);
+            routeConfig.push('Post');
+            routeConfig.push('Login');
         }
 
         return (
-            <nav className="navbar navbar-default">
-                <div className="navbar-header">
-                    <Link className="navbar-brand" to="app">Hu</Link>
+            <div className="blog-masthead">
+                <div className="container">
+                    <nav className="blog-nav">
+                        {routeConfig.map(function(v) {
+                            return <Link className="blog-nav-item" to={v}>{v}</Link>
+                        })}
+                    </nav>
                 </div>
-                <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul className="nav navbar-nav">
-                   {items}
-                    </ul>
-                </div>
-            </nav>
+            </div>
         )
     }
 });

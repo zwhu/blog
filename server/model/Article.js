@@ -28,7 +28,7 @@ Article.prototype.post = function (article, callback) {
         title: article.title,
         content: article.content,
         tags: article.tags,
-        summary: article.tags,
+        summary: article.summary,
         titlePic: article.titlePic,
         displayContent: article.displayContent
     };

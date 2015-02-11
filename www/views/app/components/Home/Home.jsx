@@ -39,26 +39,38 @@ var Home = React.createClass({
         }
     },
     render: function () {
+        function getImg(pic) {
+            if(!!pic)
+                return (<img src={pic} className="blog-home-article-pic"/>)
+        }
         return (
-            <div style={{"width": "720px", "minHeight": "640px"}}>
+            <div className="row">
+                <div className="col-sm-8">
                 {this.state.articles.map(function (v) {
                     return (
-                        <div className="media well">
-                            <div className="media-left media-middle">
-                                <img style={{
-                                    "width": "64px",
-                                    "height": "64px"
-                                }} className="media-object" src={v.titlePic} alt="..." />
+                        <div className="well blog-home-article">
+                            <div className="blog-home-article-basic">
+                                <div className="blog-home-article-body">
+                                    <h4 className="blog-home-article-title">
+                                        {v.title}
+                                    </h4>
+                                    {getImg(v.titlePic)}
+                                    <p className="blog-home-article-summary">{v.summary}</p>
+                                </div>
                             </div>
-                            <div className="media-body">
-                                <h4 className="media-heading">
-                                    <Link to="Article" params={{articleId: v._id}}>{v.title}</Link>
-                                </h4>
-                                {v.summary}
+                            <div className="blog-home-article-info">
+                                <Link to="Article" params={{articleId: v._id}}>-Read More-</Link>
                             </div>
                         </div>
                     )
                 })}
+                </div>
+                <div className="col-sm-4">
+                    <div className="well" style={{"background": "#fff"}}>
+                        <p>随便说:</p>
+                        <p>「此功能还在紧张的开发中....」</p>
+                    </div>
+                </div>
             </div>
         );
     }

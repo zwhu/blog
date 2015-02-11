@@ -17,9 +17,9 @@ var Index = React.createClass({
     },
     render: function () {
         return (
-            <div className="container">
+            <div>
                 <Nav />
-                <div>
+                <div className="container blog-container">
                     <RouteHandler />
                 </div>
             </div>

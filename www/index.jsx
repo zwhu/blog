@@ -5,10 +5,11 @@ var index = React.createClass({
         return (
                 <html>
                     <head>
-                        <meta charSet="UTF-8"/>
                         <title>{this.props.title}</title>
-                        <link rel="stylesheet" href={this.props.link} />
+                        <meta charSet="UTF-8"/>
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
                         <link rel="stylesheet" href='/vendor/bootstrap/dist/css/bootstrap.min.css' />
+                        <link rel="stylesheet" href={this.props.link} />
                     </head>
                     <body></body>
                     <script src={this.props.src}></script>
