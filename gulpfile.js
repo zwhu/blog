@@ -24,7 +24,7 @@ gulp.task('clean', function(cb) {
 gulp.task('minify-css', function() {
     gulp.src('./public/stylesheets/style.css')
         .pipe(minifyCSS({keepBreaks:true}))
-        .pipe(rename('style.min.js'))
+        .pipe(rename('style.min.css'))
         .pipe(gulp.dest('./public/stylesheets/'))
 });
 
