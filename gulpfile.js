@@ -10,13 +10,22 @@ var rename = require('gulp-rename');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
+var minifyCSS = require('gulp-minify-css');
 var del = require('del');
 
 // TODO: live load
 
 // clean
 gulp.task('clean', function(cb) {
-    del(['./public/build/', './public/javascripts/*.js'], cb)
+    del(['./public/build/', './public/javascripts/*.js', './public/stylesheets/style.min.css'], cb)
+});
+
+
+gulp.task('minify-css', function() {
+    gulp.src('./public/stylesheets/style.css')
+        .pipe(minifyCSS({keepBreaks:true}))
+        .pipe(rename('style.min.js'))
+        .pipe(gulp.dest('./public/stylesheets/'))
 });
 
 
@@ -45,7 +54,7 @@ gulp.task('scripts', ['browserify'],  function() {
 
 // 默认任务
 gulp.task('default', function() {
-    gulp.run('browserify', 'scripts');
+    gulp.run('browserify', 'scripts', 'minify-css');
     // 监听文件变化
     gulp.watch('./www/views/**/*.js*', function() {
         gulp.run('browserify', 'scripts');

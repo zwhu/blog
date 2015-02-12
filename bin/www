@@ -14,7 +14,6 @@ var http = require('http');
 
 
 var env = app.get('env');
-console.log(env)
 var port = normalizePort(env === 'production' ? '80' : '3000');
 app.set('port', port);
 
