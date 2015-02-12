@@ -28,9 +28,9 @@ node_modules
 .lock-wscript
 
 # webstorm
-# bin
+bin
 
 # Express public
-public
-
-
+public/build
+public/javascripts
+public/vendor
