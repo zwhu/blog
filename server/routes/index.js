@@ -20,11 +20,6 @@ var config = {
     }
 };
 
-function getToken() {
-    return Math.random().toString(36).substring(7);
-}
-
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', config[app.get('env') || 'development']);
@@ -69,6 +64,30 @@ router.get('/articles/:id', function(req, res, next) {
         }
         //TODO: 以后要对HTTP的请求返回错误做出规范
         return res.status(404).end();
+    });
+});
+
+//TODO: 中间件做 user 的验证
+router.delete('/articles/:id', function(req, res, next) {
+    // 从数据库中取出token
+    if(!req.cookies.token) {
+        return res.status(404).end();
+    }
+
+    var user = new User();
+    user.get(req.cookies.user, function(e, v) {
+        if(v && v.token !== req.cookies.token) {
+            return res.status(404).end();
+        }
+
+        var article = new Article();
+        article.delete(req.id, function(e) {
+            if (!e) {
+                return res.status(200).end();
+            }
+            //TODO: 以后要对HTTP的请求返回错误做出规范
+            return res.status(404).end();
+        });
     });
 });
 

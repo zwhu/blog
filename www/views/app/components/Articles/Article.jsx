@@ -46,8 +46,13 @@ var Article = React.createClass({
         if(article.length) {
             article = article[0];
             return (
-                <div style={{"width": "720px", "minHeight": "640px"}}>
-                    <div dangerouslySetInnerHTML={{__html: article.displayContent}}>
+                <div className="container">
+                    <div className="well" style={{"background": "#fff",
+                        "word-wrap": "break-word",
+                        "word-break": "normal"
+                    }}>
+                        <div dangerouslySetInnerHTML={{__html: article.displayContent}}>
+                        </div>
                     </div>
                 </div>
             );

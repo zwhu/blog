@@ -104,7 +104,7 @@ Article.prototype.update = function(id, update, callback) {
             }
             var query = {};
             if (id) {
-                query._id = id;
+                query._id = new ObjectID(id);
             } else {
                 db.close();
                 return callback('id 不存在!');
@@ -139,7 +139,7 @@ Article.prototype.delete = function(id, callback) {
             }
             var query = {};
             if (id) {
-                query._id = id;
+                query._id = new ObjectID(id);
             } else {
                 db.close();
                 return callback('id 不存在!');
