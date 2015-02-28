@@ -1,7 +1,7 @@
 var express = require('express');
 var app =express();
 var router = express.Router();
-var markdown = require( "markdown" ).markdown;
+var marked = require('marked');
 
 var User = require('../model/User');
 var Article = require('../model/Article');
@@ -122,7 +122,13 @@ router.post('/posts', function(req, res, next) {
             return res.status(404).end();
         }
 
-        req.body.displayContent = markdown.toHTML(req.body.content);
+        marked.setOptions({
+            highlight: function (code) {
+                return require('highlight.js').highlightAuto(code).value;
+            }
+        });
+
+        req.body.displayContent = marked(req.body.content);
 
         var article = new Article();
         article.post(req.body, function(e) {

@@ -43,17 +43,45 @@ var Article = React.createClass({
     },
     render: function () {
         var article = this.state.article;
-        if(article.length) {
+        if (article.length) {
             article = article[0];
             return (
-                <div className="container">
-                    <div className="well" style={{"background": "#fff",
+                <div className="article container">
+                    <div className="title">
+                        <h1 style={{
+                            "padding": "20px 20px 20px 0",
+                            "color": "rgba(0, 0, 0, 0.7)"
+                        }}>{article.title}</h1>
+                    </div>
+                    <div className="well"  style={{
+                        "background": "#fff",
                         "word-wrap": "break-word",
                         "word-break": "normal"
                     }}>
-                        <div dangerouslySetInnerHTML={{__html: article.displayContent}}>
+                        <div className="content">
+                            <div dangerouslySetInnerHTML={{__html: article.displayContent}}></div>
                         </div>
+                        <div className="tags" style={{
+                            "background-color": "#fafafa",
+                            "padding": "8px 0"
+                        }}>
+                            <span className="glyphicon glyphicon-tags tag" aria-hidden="true"></span>
+                            {article.tags.map(function (result) {
+                                return (<span className="tag">
+                                    <a href="/tags/{result}" style={{
+                                        "color": "#696"
+                                    }}>
+                                    {result}
+                                    </a>
+                                </span>);
+                            })}
+                        </div>
+                        <p style={{
+                            "text-align": "center",
+                            "margin": "10px 0 0 0"
+                        }}>本篇文章由 zwhu 发表于 {article.time.minute}</p>
                     </div>
+
                 </div>
             );
         } else {
