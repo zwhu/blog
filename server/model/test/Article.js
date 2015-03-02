@@ -83,6 +83,31 @@ describe('Article 测试', function () {
 
     });
 
+    it('Article.getTags 测试, 应该返回所有的tags', function (done) {
+        article.getTags(function(err, tags) {
+            if(err) {
+                return done(err);
+            } else {
+                if(tags[2] = 'update') {
+                    done();
+                }
+            }
+        });
+    });
+
+
+    it('Article.getByTag 测试, 应该返回符合tags的所有文章信息', function (done) {
+        article.getByTag('update', function(err, docs) {
+            if(err) {
+                return done(err);
+            } else {
+                if(docs.length > 0) {
+                    done();
+                }
+            }
+        });
+    });
+
     it('Article.delete 测试, 应该不返回错误信息', function (done) {
         article.delete(_id, function(err) {
             if(err) {
@@ -100,9 +125,6 @@ describe('Article 测试', function () {
             }
         });
 
-    });
-
-    it('Article.getByTags 测试, 应该返回符合tags的所有文章信息', function () {
     });
 
 });

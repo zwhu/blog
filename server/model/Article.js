@@ -89,6 +89,65 @@ Article.prototype.get = function (id, callback) {
 };
 
 
+// 读取所有的 tags
+Article.prototype.getTags = function(callback) {
+    //打开数据库
+    MongoClient.connect(url, function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 posts 集合
+        db.collection('articles', function (err, collection) {
+            if (err) {
+                db.close();
+                return callback(err);
+            }
+            var query = 'tags';
+            collection.distinct(query, function(err, tags) {
+                db.close();
+                if (err) {
+                    return callback(err);//失败！返回 err
+                }
+                callback(null, tags);//成功！以数组形式返回查询的结果
+            });
+        });
+    });
+};
+
+// 通过 tags 读取相应文章
+Article.prototype.getByTag = function(tag, callback) {
+    //打开数据库
+    MongoClient.connect(url, function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        //读取 posts 集合
+        db.collection('articles', function (err, collection) {
+            if (err) {
+                db.close();
+                return callback(err);
+            }
+            var query = {};
+            if (tag) {
+                query.tags = {
+                    $in: [tag]
+                };
+            }
+            //根据 query 对象查询文章
+            collection.find(query).sort({
+                time: -1
+            }).toArray(function (err, docs) {
+                db.close();
+                if (err) {
+                    return callback(err);//失败！返回 err
+                }
+                callback(null, docs);//成功！以数组形式返回查询的结果
+            });
+        });
+    });
+};
+
+
 // 除了get方法，其他的article内的方法都必须有权限判断
 Article.prototype.update = function(id, update, callback) {
     //打开数据库
@@ -154,8 +213,6 @@ Article.prototype.delete = function(id, callback) {
             });
         });
     });
-
-}
-
+};
 
 module.exports = Article;
