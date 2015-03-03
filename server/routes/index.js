@@ -141,4 +141,28 @@ router.post('/posts', function(req, res, next) {
     });
 });
 
+router.get('/tags', function(req, res, next) {
+    var article = new Article();
+    article.getTags(function(e, v) {
+        if (!e) {
+            return res.json(v);
+        }
+        return res.status(404).end();
+    });
+});
+
+router.param('tag', function(req, res, next, tag) {
+    req.tag = tag;
+    next();
+});
+router.get('/tags/:tag', function(req, res, next) {
+    var article = new Article();
+    article.getByTag(req.tag, function(e, v) {
+        if (!e) {
+            return res.json(v);
+        }
+        return res.status(404).end();
+    });
+});
+
 module.exports = router;
