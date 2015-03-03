@@ -16,5 +16,11 @@ module.exports = keyMirror({
     POST_ARTICLE_FAIL: null,
     GET_ARTICLE: null,
     GET_ARTICLE_SUCCESS: null,
-    GET_ARTICLE_FAIL: null
+    GET_ARTICLE_FAIL: null,
+    GET_TAGS: null,
+    GET_TAGS_SUCCESS: null,
+    GET_TAGS_FAIL: null,
+    GET_BY_TAG: null,
+    GET_BY_TAG_SUCCESS: null,
+    GET_BY_TAG_FAIL: null
 });

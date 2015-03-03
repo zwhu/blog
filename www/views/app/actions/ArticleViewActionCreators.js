@@ -25,6 +25,18 @@ var ArticleViewActionCreators = {
             data: data
         });
         webApiUtils.postArtilces(data);
+    },
+    getTags: function() {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.GET_TAGS
+        });
+        webApiUtils.getTags();
+    },
+    getByTag: function(tag) {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.GET_BY_TAG
+        });
+        webApiUtils.getByTag(tag);
     }
 };
 

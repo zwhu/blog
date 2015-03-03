@@ -34,3 +34,5 @@ node_modules
 public/build
 public/javascripts
 public/vendor
+
+public/stylesheets/style.min.css

@@ -1,7 +1,7 @@
 var express = require('express');
 var app =express();
 var router = express.Router();
-var markdown = require( "markdown" ).markdown;
+var marked = require('marked');
 
 var User = require('../model/User');
 var Article = require('../model/Article');
@@ -19,11 +19,6 @@ var config = {
         src: '/javascripts/all.min.js'
     }
 };
-
-function getToken() {
-    return Math.random().toString(36).substring(7);
-}
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -72,6 +67,30 @@ router.get('/articles/:id', function(req, res, next) {
     });
 });
 
+//TODO: 中间件做 user 的验证
+router.delete('/articles/:id', function(req, res, next) {
+    // 从数据库中取出token
+    if(!req.cookies.token) {
+        return res.status(404).end();
+    }
+
+    var user = new User();
+    user.get(req.cookies.user, function(e, v) {
+        if(v && v.token !== req.cookies.token) {
+            return res.status(404).end();
+        }
+
+        var article = new Article();
+        article.delete(req.id, function(e) {
+            if (!e) {
+                return res.status(200).end();
+            }
+            //TODO: 以后要对HTTP的请求返回错误做出规范
+            return res.status(404).end();
+        });
+    });
+});
+
 router.get('/posts', function(req, res, next) {
     var article = new Article(req.article);
 
@@ -103,7 +122,13 @@ router.post('/posts', function(req, res, next) {
             return res.status(404).end();
         }
 
-        req.body.displayContent = markdown.toHTML(req.body.content);
+        marked.setOptions({
+            highlight: function (code) {
+                return require('highlight.js').highlightAuto(code).value;
+            }
+        });
+
+        req.body.displayContent = marked(req.body.content);
 
         var article = new Article();
         article.post(req.body, function(e) {
@@ -113,6 +138,30 @@ router.post('/posts', function(req, res, next) {
             //TODO: 以后要对HTTP的请求返回错误做出规范
             return res.status(404).end();
         });
+    });
+});
+
+router.get('/tags', function(req, res, next) {
+    var article = new Article();
+    article.getTags(function(e, v) {
+        if (!e) {
+            return res.json(v);
+        }
+        return res.status(404).end();
+    });
+});
+
+router.param('tag', function(req, res, next, tag) {
+    req.tag = tag;
+    next();
+});
+router.get('/tags/:tag', function(req, res, next) {
+    var article = new Article();
+    article.getByTag(req.tag, function(e, v) {
+        if (!e) {
+            return res.json(v);
+        }
+        return res.status(404).end();
     });
 });
 

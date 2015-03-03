@@ -18,5 +18,8 @@
     "public/vendor",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "highlight-js": "~7.0.1"
+  }
 }

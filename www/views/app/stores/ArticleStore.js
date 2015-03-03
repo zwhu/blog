@@ -14,6 +14,7 @@ var _articles = [];
 var _errMsg = '';
 var _status = '';
 var _article = [];
+var _tags = [];
 
 var ArticleStore = assign({}, EventEmitter.prototype, {
     getArticles: function () {
@@ -21,6 +22,9 @@ var ArticleStore = assign({}, EventEmitter.prototype, {
     },
     getArticle: function () {
         return _article;
+    },
+    getTags: function() {
+        return _tags;
     },
     getStatus: function () {
         return _status;
@@ -75,6 +79,28 @@ AppDispatcher.register(function (payload) {
             _article = action.data;
             break;
         case AppConstants.GET_ARTICLE_FAIL:
+            _status = 'fasle';
+            _errMsg = action.errMsg;
+            break;
+        case AppConstants.GET_TAGS:
+            _status = 'loading';
+            break;
+        case AppConstants.GET_TAGS_SUCCESS:
+            _status = 'success';
+            _tags = action.data;
+            break;
+        case AppConstants.GET_TAGS_FAIL:
+            _status = 'fasle';
+            _errMsg = action.errMsg;
+            break;
+        case AppConstants.GET_BY_TAG:
+            _status = 'loading';
+            break;
+        case AppConstants.GET_BY_TAG_SUCCESS:
+            _status = 'success';
+            _articles = action.data;
+            break;
+        case AppConstants.GET_BY_TAG_FAIL:
             _status = 'fasle';
             _errMsg = action.errMsg;
             break;

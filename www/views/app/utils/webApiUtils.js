@@ -34,6 +34,20 @@ module.exports = {
         }, function(error) {
             ArticleServerActionCreators.postArticleFail(error);
         });
+    },
+    getTags: function() {
+        ajax.get('/tags').then(function(data) {
+            ArticleServerActionCreators.getTagsSuccess(data);
+        }, function(error) {
+            ArticleServerActionCreators.getTagsFail(error);
+        });
+    },
+    getByTag: function(tag) {
+        ajax.get('/tags' + tag).then(function(data) {
+            ArticleServerActionCreators.getByTagSuccess(data);
+        }, function(error) {
+            ArticleServerActionCreators.getByTagFail(error);
+        });
     }
 
 };
