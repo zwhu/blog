@@ -8,6 +8,9 @@ var Link = Router.Link;
 var ArticleStore = require('../../stores/ArticleStore');
 var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators');
 
+var Say = require('../Say.jsx');
+var Tag = require('./Tag.jsx');
+
 var ArticlesHome = React.createClass({
     getInitialState: function () {
         return ({
@@ -42,14 +45,17 @@ var ArticlesHome = React.createClass({
 
         var tags = this.state.tags;
         return (
-            <div className="container">
-                <ul>
+            <div className="row">
+                <div className="col-sm-8 well" style={{"background": "#fff"}}>
+                    <ul>
                 {
-                    tags.map(function(result) {
-                       return  (<li>{result}</li>)
+                    tags.map(function(result, index) {
+                        return  (<Tag key={index} data={result} />)
                     })
                 }
-                </ul>
+                    </ul>
+                </div>
+                <Say />
             </div>
         );
     }

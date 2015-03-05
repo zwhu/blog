@@ -43,7 +43,7 @@ module.exports = {
         });
     },
     getByTag: function(tag) {
-        ajax.get('/tags' + tag).then(function(data) {
+        ajax.get('/tags/' + tag).then(function(data) {
             ArticleServerActionCreators.getByTagSuccess(data);
         }, function(error) {
             ArticleServerActionCreators.getByTagFail(error);

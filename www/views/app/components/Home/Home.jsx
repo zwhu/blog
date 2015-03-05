@@ -7,6 +7,7 @@ var Link = Router.Link;
 var ArticleStore = require('../../stores/ArticleStore');
 var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators');
 
+var Say = require('../Say.jsx');
 
 var Home = React.createClass({
     getInitialState: function () {
@@ -65,12 +66,7 @@ var Home = React.createClass({
                     )
                 })}
                 </div>
-                <div className="col-sm-4">
-                    <div className="well" style={{"background": "#fff"}}>
-                        <p>随便说:</p>
-                        <p>「此功能还在紧张的开发中....」</p>
-                    </div>
-                </div>
+                <Say />
             </div>
         );
     }
