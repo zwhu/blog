@@ -1,4 +1,4 @@
-exports.config = {
+module.exports = {
     development: {
         title: '测试环境',
         link: '/stylesheets/style.css',

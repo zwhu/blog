@@ -42,21 +42,29 @@ gulp.task('browserify', function() {
         .pipe(gulp.dest('./public/build/'));
 });
 
-// 合并，压缩文件
-gulp.task('scripts', ['browserify'],  function() {
+// 合并
+gulp.task('concat', ['browserify'],  function() {
     gulp.src('./public/build/*.js')
         .pipe(concat('all.js'))
         .pipe(gulp.dest('./public/javascripts'))
-        .pipe(rename('all.min.js'))
+});
+
+// 压缩js
+gulp.task('minify-js', ['concat'], function() {
+    gulp.src('./public/javascripts/all.js')
         .pipe(uglify())
+        .pipe(rename('all.min.js'))
         .pipe(gulp.dest('./public/javascripts'));
 });
 
 // 默认任务
 gulp.task('default', function() {
-    gulp.run('browserify', 'scripts', 'minify-css');
+    gulp.run('minify-js', 'minify-css');
+});
+
+gulp.task('watch', function() {
     // 监听文件变化
     gulp.watch('./www/views/**/*.js*', function() {
-        gulp.run('browserify', 'scripts');
+        gulp.run('browserify', 'concat');
     });
 });

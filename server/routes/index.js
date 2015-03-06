@@ -8,7 +8,6 @@ var Article = require('../model/Article');
 var config = require('../config.js');
 
 
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', config[app.get('env') || 'development']);
