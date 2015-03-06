@@ -2,7 +2,6 @@
 
 var React = require('react');
 var Router = require('react-router');
-var Link = Router.Link;
 
 var ArticleStore = require('../../stores/ArticleStore');
 var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators');

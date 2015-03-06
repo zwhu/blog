@@ -7,8 +7,6 @@ var Router = require('react-router');
 var Route = Router.Route;
 //var NotFoundRoute = require('Router/NotFoundRoute');
 //var DefaultRoute = require('Router/DefaultRoute');
-var Link = Router.Link;
-var RouteHandler = Router.RouteHandler;
 var run = Router.run;
 var DefaultRoute = Router.DefaultRoute;
 

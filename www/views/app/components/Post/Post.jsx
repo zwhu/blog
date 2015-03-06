@@ -2,13 +2,10 @@
 
 var React = require('react');
 var Router = require('react-router');
-var ajax = require('../../utils/ajax');
 var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators');
 var ArticleStore = require('../../stores/ArticleStore');
 var AuthStore = require('../../stores/AuthStore');
 
-
-var Link = Router.Link;
 
 var Login = React.createClass({
     mixins: [Router.Navigation],
