@@ -12,25 +12,27 @@ var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var minifyCSS = require('gulp-minify-css');
 var del = require('del');
+var mocha = require('gulp-mocha');
+
 
 // TODO: live load
 
 // clean
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
     del(['./public/build/', './public/javascripts/*.js', './public/stylesheets/style.min.css'], cb)
 });
 
 
-gulp.task('minify-css', function() {
+gulp.task('minify-css', function () {
     gulp.src('./public/stylesheets/style.css')
-        .pipe(minifyCSS({keepBreaks:true}))
+        .pipe(minifyCSS({keepBreaks: true}))
         .pipe(rename('style.min.css'))
         .pipe(gulp.dest('./public/stylesheets/'))
 });
 
 
 // react
-gulp.task('browserify', function() {
+gulp.task('browserify', function () {
     return browserify({
         entries: './www/views/app.jsx',
         transform: [reactify]
@@ -43,28 +45,34 @@ gulp.task('browserify', function() {
 });
 
 // 合并
-gulp.task('concat', ['browserify'],  function() {
+gulp.task('concat', ['browserify'], function () {
     gulp.src('./public/build/*.js')
         .pipe(concat('all.js'))
         .pipe(gulp.dest('./public/javascripts'))
 });
 
 // 压缩js
-gulp.task('minify-js', ['concat'], function() {
+gulp.task('minify-js', ['concat'], function () {
     gulp.src('./public/javascripts/all.js')
         .pipe(uglify())
         .pipe(rename('all.min.js'))
         .pipe(gulp.dest('./public/javascripts'));
 });
 
+gulp.task('test', function () {
+    process.env.NODE_ENV = 'test';
+    return gulp.src('./server/model/test/*.js')
+        .pipe(mocha({}));
+});
+
 // 默认任务
-gulp.task('default', function() {
+gulp.task('default', function () {
     gulp.run('minify-js', 'minify-css');
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     // 监听文件变化
-    gulp.watch('./www/views/**/*.js*', function() {
+    gulp.watch('./www/views/**/*.js*', function () {
         gulp.run('browserify', 'concat');
     });
 });
