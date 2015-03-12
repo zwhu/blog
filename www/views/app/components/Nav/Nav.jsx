@@ -13,20 +13,16 @@ var Nav = React.createClass({
     },
     mixins: [Router.State],
     render: function () {
-
-        var routeConfig = ["Home", "Articles", "About"];
-
+        var routeConfig = ["Home", "Tags", "About"];
         if (this.state.post) {
             routeConfig.push('Post');
-            routeConfig.push('Login');
         }
-
         return (
             <div className="blog-masthead">
                 <div className="container">
                     <nav className="blog-nav">
-                        {routeConfig.map(function(v) {
-                            return <Link className="blog-nav-item" to={v}>{v}</Link>
+                        {routeConfig.map(function(v, index) {
+                            return <Link key={index} className="blog-nav-item" to={v}>{v}</Link>
                         })}
                     </nav>
                 </div>

@@ -8,6 +8,11 @@ body {
     background-color: #eee;
 }
 
+html, body {
+    height: 100%;
+    min-height: 100%;
+}
+
 h1, .h1,
 h2, .h2,
 h3, .h3,
@@ -50,6 +55,7 @@ h6, .h6 {
     font-weight: 500;
     color: #cdddeb;
 }
+
 .blog-nav-item:hover,
 .blog-nav-item:focus {
     color: #fff;
@@ -58,6 +64,7 @@ h6, .h6 {
 
 .blog-container {
     padding: 16px;
+    min-height: 550px;
 }
 
 .blog-home-article {
@@ -120,7 +127,29 @@ h6, .h6 {
     margin: 10px;
 }
 
-.tag{
+.tag {
     margin-left: 10px;
 }
 
+.tags-page .tag {
+    display: inline-block;
+    padding: 0 10px;
+    background: #eee;
+    margin-bottom: 10px;
+}
+
+footer {
+    height: 105px;
+    background-color: #428bca;
+    -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+    box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+    color: #fff;
+    font-size: 12px;
+    bottom: 0;
+    width: 100%;
+}
+
+footer .submit {
+    padding: 30px 0;
+    margin: 0;
+}

@@ -5,12 +5,14 @@ var Router = require('react-router');
 
 var RouteHandler = Router.RouteHandler;
 
-var Tag = React.createClass({
+var ArticleItem = React.createClass({
     render: function () {
         return (
-            <RouteHandler />
+            <div>
+                「此功能正在开发中...」
+            </div>
         );
     }
 });
 
-module.exports = Tag;
+module.exports = ArticleItem;

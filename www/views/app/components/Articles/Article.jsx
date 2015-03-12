@@ -6,6 +6,7 @@ var Router = require('react-router');
 var ArticleStore = require('../../stores/ArticleStore');
 var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators');
 
+var Link = Router.Link;
 
 var Article = React.createClass({
     mixins: [Router.State],
@@ -65,13 +66,13 @@ var Article = React.createClass({
                             "padding": "8px 0"
                         }}>
                             <span className="glyphicon glyphicon-tags tag" aria-hidden="true"></span>
-                            {article.tags.map(function (result) {
+                            { article.tags.map(function (result) {
                                 return (<span className="tag">
-                                    <a href="/tags/{result}" style={{
+                                    <Link to="ArticleItemByTag" params={{tagName: result}} style={{
                                         "color": "#696"
                                     }}>
                                     {result}
-                                    </a>
+                                    </Link>
                                 </span>);
                             })}
                         </div>

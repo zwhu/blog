@@ -97,6 +97,7 @@ AppDispatcher.register(function (payload) {
             _status = 'loading';
             break;
         case AppConstants.GET_BY_TAG_SUCCESS:
+            console.log(action.data)
             _status = 'success';
             _articles = action.data;
             break;

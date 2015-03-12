@@ -6,7 +6,7 @@ var About = React.createClass({
     render: function () {
         return (
             <div>
-                「此功能还在紧张的开发中....」
+                「他很懒，暂时什么都没留下....」
             </div>
         );
     }
