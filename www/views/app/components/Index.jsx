@@ -15,6 +15,7 @@ var Index = React.createClass({
 
     },
     render: function () {
+        // 根据窗口算 clinet height
         return (
             <div>
                 <Nav />
