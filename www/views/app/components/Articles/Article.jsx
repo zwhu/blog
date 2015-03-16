@@ -8,9 +8,11 @@ var ArticleViewActionCreators = require('../../actions/ArticleViewActionCreators
 
 var Link = Router.Link;
 
+var Say = require('../Say.jsx');
+var Recommend = require('../Recommend/Recommend.jsx');
+
 var Article = React.createClass({
     mixins: [Router.State],
-
     getInitialState: function () {
         return ({
             article: ArticleStore.getArticle()
@@ -46,42 +48,47 @@ var Article = React.createClass({
         if (article.length) {
             article = article[0];
             return (
-                <div className="article container">
-                    <div className="title">
-                        <h1 style={{
-                            "padding": "20px 20px 20px 0",
-                            "color": "rgba(0, 0, 0, 0.7)"
-                        }}>{article.title}</h1>
-                    </div>
-                    <div className="well"  style={{
-                        "background": "#fff",
-                        "word-wrap": "break-word",
-                        "word-break": "normal"
-                    }}>
-                        <div className="content">
-                            <div dangerouslySetInnerHTML={{__html: article.displayContent}}></div>
+                <div className="container row">
+                    <div className="article col-sm-8">
+                        <div className="title">
+                            <h1 style={{
+                                "padding": "20px 20px 20px 0",
+                                "color": "rgba(0, 0, 0, 0.7)"
+                            }}>{article.title}</h1>
                         </div>
-                        <div className="tags" style={{
-                            "background-color": "#fafafa",
-                            "padding": "8px 0"
+                        <div className="well"  style={{
+                            "background": "#fff",
+                            "wordWrap": "break-word",
+                            "wordBreak": "normal"
                         }}>
-                            <span className="glyphicon glyphicon-tags tag" aria-hidden="true"></span>
-                            { article.tags.map(function (result) {
-                                return (<span className="tag">
-                                    <Link to="ArticleItemByTag" params={{tagName: result}} style={{
-                                        "color": "#696"
-                                    }}>
-                                    {result}
-                                    </Link>
-                                </span>);
-                            })}
+                            <div className="content">
+                                <div dangerouslySetInnerHTML={{__html: article.displayContent}}></div>
+                            </div>
+                            <div className="tags" style={{
+                                "backgroundColor": "#fafafa",
+                                "padding": "8px 0"
+                            }}>
+                                <span className="glyphicon glyphicon-tags tag" aria-hidden="true"></span>
+                                { article.tags.map(function (result) {
+                                    return (<span className="tag">
+                                        <Link to="ArticleItemByTag" params={{tagName: result}} style={{
+                                            "color": "#696"
+                                        }}>
+                                        {result}
+                                        </Link>
+                                    </span>);
+                                })}
+                            </div>
+                            <p style={{
+                                "text-align": "center",
+                                "margin": "10px 0 0 0"
+                            }}>本篇文章由 zwhu 发表于 {article.time.minute}</p>
                         </div>
-                        <p style={{
-                            "text-align": "center",
-                            "margin": "10px 0 0 0"
-                        }}>本篇文章由 zwhu 发表于 {article.time.minute}</p>
                     </div>
-
+                    <div className="col-sm-4">
+                        <Say />
+                        <Recommend />
+                    </div>
                 </div>
             );
         } else {

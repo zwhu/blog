@@ -66,7 +66,9 @@ var Home = React.createClass({
                     )
                 })}
                 </div>
-                <Say />
+                <div className="col-sm-4">
+                    <Say />
+                </div>
             </div>
         );
     }

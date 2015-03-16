@@ -65,7 +65,9 @@ var Tags = React.createClass({
                     </div>
                 {isShow}
                 </div>
-                <Say />
+                <div className="col-sm-4">
+                    <Say />
+                </div>
             </div>
         );
     }

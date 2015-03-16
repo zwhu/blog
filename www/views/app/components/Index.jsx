@@ -9,13 +9,9 @@ var RouteHandler = Router.RouteHandler;
 
 var Index = React.createClass({
     getInitialState: function() {
-        return {}
-    },
-    componentDidMount: function() {
-
+        return null;
     },
     render: function () {
-        // 根据窗口算 clinet height
         return (
             <div>
                 <Nav />
