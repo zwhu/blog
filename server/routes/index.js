@@ -6,6 +6,7 @@ var marked = require('marked');
 var User = require('../model/User');
 var Article = require('../model/Article');
 var config = require('../config.js');
+var Say = require('../model/Say.js');
 
 
 /* GET home page. */
@@ -152,5 +153,55 @@ router.get('/tags/:tag', function(req, res, next) {
         return res.status(404).end();
     });
 });
+
+router.get('/says/last', function(req, res, next) {
+    var say = new Say();
+    say.getLast(function(e, v) {
+        if (!e) {
+            return res.json(v);
+        }
+        return res.status(404).end();
+    });
+});
+
+router.get('/says/all', function(req, res, next) {
+    var say = new Say();
+    // 取所有
+    say.get(function(e, v) {
+        if (!e) {
+            return res.json(v);
+        }
+        return res.status(404).end();
+    });
+});
+
+router.param('tag', function(req, res, next, sayId) {
+    req.tag = sayId;
+    next();
+});
+router.delete('/says/:saysId', function(req, res, next) {
+    // 从数据库中取出token
+    if(!req.cookies.token) {
+        return res.status(404).end();
+    }
+
+    var user = new User();
+    user.get(req.cookies.user, function(e, v) {
+        if(v && v.token !== req.cookies.token) {
+            return res.status(404).end();
+        }
+
+        var say = new Say();
+        say.delete(req.sayId, function(e) {
+            if (!e) {
+                return res.status(200).end();
+            }
+            //TODO: 以后要对HTTP的请求返回错误做出规范
+            return res.status(404).end();
+        });
+    });
+});
+
+
 
 module.exports = router;
