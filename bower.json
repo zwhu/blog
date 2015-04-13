@@ -20,6 +20,7 @@
     "tests"
   ],
   "dependencies": {
-    "highlight-js": "~7.0.1"
+    "highlight-js": "~7.0.1",
+    "bootstrap": "~3.3.4"
   }
 }
