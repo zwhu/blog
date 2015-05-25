@@ -49,6 +49,7 @@ function gulpGui(envs) {
             switch (key.name) {
                 case 'return':
                     list.stop();
+                    //TODO: 重新开个子进程来 start
                     process.stdin.resume();
                     process.stdin.on('keypress', onkeypress);
                     console.log('Run Gulp Tasks: ' + item + ' in ' + env);

@@ -39,6 +39,8 @@ var routes = (
     </Route>
 );
 
+alert(123)
+
 run(routes, function (Handler) {
     React.render(<Handler />, document.body);
 });
