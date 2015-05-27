@@ -18,7 +18,6 @@ var Home = require('./app/components/Home/Home.jsx');
 var Post = require('./app/components/Post/Post.jsx');
 var Articles = require('./app/components/Articles/Articles.jsx');
 var Article = require('./app/components/Articles/Article.jsx');
-var Tag = require('./app/components/Articles/Tag.jsx');
 var Tags = require('./app/components/Articles/Tags.jsx');
 var ArticleItemByTag = require('./app/components/Articles/ArticleItemByTag.jsx');
 var ArticleItem = require('./app/components/Articles/ArticleItem.jsx');
