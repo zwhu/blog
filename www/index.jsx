@@ -8,8 +8,6 @@ var index = React.createClass({
                         <title>{this.props.title}</title>
                         <meta charSet="UTF-8"/>
                         <meta name="viewport" content="width=device-width, initial-scale=1" />
-                        <link rel="stylesheet" href='/vendor/bootstrap/dist/css/bootstrap.min.css' />
-                        <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/8.4/styles/github.min.css" />
                         <link rel="stylesheet" href={this.props.link} />
                     </head>
                     <body></body>

@@ -1,11 +1,11 @@
 module.exports = {
     development: {
-        title: '测试环境',
+        title: '测试',
         link: '/stylesheets/style.css',
-        src: '/javascripts/app.min.js'
+        src: '/javascripts/app.js'
     },
     production: {
-        title: 'zwhu',
+        title: 'JackHu',
         link: '/stylesheets/style.min.css',
         src: '/javascripts/app.min.js'
     }

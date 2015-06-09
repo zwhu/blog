@@ -19,15 +19,7 @@ var watch = false;
 
 // clean
 gulp.task('clean', function (cb) {
-  del(['./public/build/', './public/javascripts/*.js', './public/stylesheets/style.min.css'], cb)
-});
-
-
-gulp.task('minify-css', function () {
-  gulp.src('./public/stylesheets/style.css')
-    .pipe(minifyCSS({keepBreaks: true}))
-    .pipe($.rename('style.min.css'))
-    .pipe(gulp.dest('./public/stylesheets/'))
+  del(['./public/bundle/', './public/javascripts/**.*', './public/stylesheets/**.css'], cb);
 });
 
 
@@ -43,9 +35,16 @@ gulp.task('bundle', function (cb) {
       throw new $.util.PluginError('webpack', err);
     }
 
-    if (verbose) {
-      $.util.log('[webpack]', stats.toString({colors: true}));
-    }
+    console.log(stats.toString({
+      colors: $.util.colors.supportsColor,
+      hash: verbose,
+      version: verbose,
+      timings: verbose,
+      chunks: verbose,
+      chunkModules: verbose,
+      cached: verbose,
+      cachedAssets: verbose
+    }));
 
     if (!started) {
       started = true;
@@ -60,22 +59,22 @@ gulp.task('bundle', function (cb) {
   }
 });
 
-
-gulp.task('build:watch', function (cb) {
+// watch
+gulp.task('watch', function (cb) {
   watch = true;
   runSequence('bundle', cb);
 });
 
 
-// 合并
-gulp.task('concat', ['bundle'], function () {
-  gulp.src('./public/javascripts/*.js')
-    .pipe($.concat('all.js'))
-    .pipe(gulp.dest('./public/javascripts'))
-});
+//// 合并
+//gulp.task('concat', ['bundle'], function () {
+//  gulp.src('./public/javascripts/*.js')
+//    .pipe($.concat('app.js'))
+//    .pipe(gulp.dest('./public/javascripts'))
+//});
 
-// 压缩js
-gulp.task('minify-js', function () {
+// 压缩 js
+gulp.task('minify-js', ['bundle'], function () {
   gulp.src('./public/bundle/bundle.js')
     .pipe($.sourcemaps.init())
     .pipe($.uglify())
@@ -84,6 +83,15 @@ gulp.task('minify-js', function () {
     .pipe(gulp.dest('./public/javascripts'));
 });
 
+// 压缩 css
+gulp.task('minify-css', function () {
+  gulp.src('./public/stylesheets/style.css')
+    .pipe(minifyCSS({keepBreaks: true}))
+    .pipe($.rename('style.min.css'))
+    .pipe(gulp.dest('./public/stylesheets/'))
+});
+
+// 测试
 gulp.task('test', function () {
   process.env.NODE_ENV = 'test';
   return gulp.src('./server/model/test/*.js')
@@ -91,6 +99,11 @@ gulp.task('test', function () {
 });
 
 // 默认任务
-gulp.task('default', function () {
-  gulp.run('minify-js', 'minify-css');
+gulp.task('default', function (cb) {
+  runSequence(['watch'], cb);
+});
+
+// build
+gulp.task('build', function (cb) {
+  runSequence(['clean', 'bundle', 'minify-js', 'minify-css'], cb);
 });
