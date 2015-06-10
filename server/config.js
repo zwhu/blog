@@ -2,7 +2,7 @@ module.exports = {
     development: {
         title: '测试',
         link: '/stylesheets/style.css',
-        src: '/javascripts/app.js'
+        src: '/bundle/bundle.js'
     },
     production: {
         title: 'JackHu',
