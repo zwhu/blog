@@ -15,6 +15,8 @@ var argv = require('minimist')(process.argv.slice(2));
 
 var webpack = require('webpack');
 
+var WebpackDevServer = require('webpack-dev-server');
+
 var watch = false;
 
 // clean
@@ -62,7 +64,16 @@ gulp.task('bundle', function (cb) {
 // watch
 gulp.task('watch', function (cb) {
   watch = true;
-  runSequence('bundle', cb);
+  runSequence('bundle', 'livereload', cb);
+});
+
+// liveload
+gulp.task('livereload', function() {
+  var server = $.livereload();
+  gulp.watch(__dirname + '/public/', function() {
+    server.changed(file.path);
+  });
+
 });
 
 

@@ -28,6 +28,8 @@ node_modules
 .lock-wscript
 
 # webstorm
+.idea
+
 # bin
 
 # Express public
@@ -36,12 +38,3 @@ public/javascripts
 public/vendor
 
 public/stylesheets/style.min.css
-.idea/.name
-.idea/blog.iml
-.idea/codeStyleSettings.xml
-.idea/jsLibraryMappings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
-.idea/libraries/blog_node_modules.xml
